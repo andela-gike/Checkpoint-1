@@ -1,10 +1,35 @@
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
 
-gulp.task('default', ['style'], function() {
-   // watch for CSS changes
-   gulp.watch('src/style/*.css', function() {
-      // run styles upon changes
-      gulp.run('style');
-   });
+const gulp = require('gulp');
+const jasmineBrowser = require('gulp-jasmine-browser');
+const browserSync = require('browser-sync').create();
+const eslint = require('gulp-eslint');
+
+gulp.task('eslint', () => {
+  gulp.src('./src/*.js', 'jasmine/lib/spec/*.js')
+    .pipe(eslint())
+    .pipe(eslint.format());
 });
+
+gulp.task('browserSync', () => {
+  browserSync.init({
+    server: {
+      baseDir: './',
+      index: 'index.html',
+    },
+    port: 8080
+  });
+});
+
+
+gulp.task('watch', () => {
+  gulp.watch('/src/styles/*.css', browserSync.reload);
+  gulp.watch('/index.html', browserSync.reload);
+  gulp.watch('/src/inverted-index.js', browserSync.reload);
+});
+
+gulp.task('jasmineBrowser', () => {
+  gulp.src(['src/**/**.*', 'jasmine/spec/inverted-index-test.js'])
+    .pipe(jasmineBrowser().browserSync.reload);
+});
+
+gulp.task('default', ['browserSync', 'eslint', 'jasmineBrowser']);
