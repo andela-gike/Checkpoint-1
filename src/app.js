@@ -1,9 +1,9 @@
 /* eslint no-undef:0 */
 /* eslint no-unused-vars:0 */
 
-const app = angular.module('indexapp', []);
+const app = angular.module('invIndex', []);
 
-app.controller('MainCtrller', ['$scope', ($scope) => {
+app.controller('MainController', ['$scope', ($scope) => {
   $scope.indexInstance = new Index();
   $scope.indexReveal = false;
   $scope.searchTable = false;
@@ -11,19 +11,19 @@ app.controller('MainCtrller', ['$scope', ($scope) => {
   $scope.uploadFile = {};
   $scope.indexFile = {};
   $scope.keys = Object.keys;
-  $scope.arrayCount = (num) => {
-    return new Array(num);
+  $scope.arrayCount = (number) => {
+    return new Array(number);
   };
 
-  const resMsg = (msg) => {
+  const retMsg = (msg) => {
     $scope.message = msg;
     $('.modal').modal();
   };
 
   $scope.uploadedFile = (file) => {
-    const regexp = /\.json/;
-    if (!regexp.test(file.name.toString())) {
-      resMsg('Upload a valid JSON file');
+    const regxp = /\.json/;
+    if (!regxp.test(file.name.toString())) {
+      retMsg('Upload a valid JSON file');
     }
     const reader = new FileReader();
     let fileContent;
@@ -34,41 +34,65 @@ app.controller('MainCtrller', ['$scope', ($scope) => {
       $scope.$apply();
     };
   };
+
   $scope.createIndex = () => {
     const addFile = $scope.addFile;
+    $scope.newIndex = [];
     if (!addFile) {
-      resMsg('No file selected');
+      retMsg('No file selected');
     }
-    if ($scope.indexInstance.createIndex(addFile, $scope.uploadFile[addFile])) {
-      $scope.indexReveal = true;
-      $scope.searchTable = false;
-      $scope.indexFile[addFile] = {
-        name: addFile,
-        index: $scope.indexInstance.getIndex(addFile)
-      };
+    if (addFile === 'all') {
+      for (const file of Object.keys($scope.uploadFile)) {
+        $scope.indices = $scope.indexInstance.createIndex(file, $scope.uploadFile[file]);
+        $scope.newIndex.push($scope.indices);
+      }
     } else {
-      resMsg('There was a problem creating an index from the file');
+      $scope.indices = $scope.indexInstance.createIndex(addFile, $scope.uploadFile[addFile]);
+      $scope.newIndex.push($scope.indices);
+      if ($scope.newIndex[0] === false) {
+        retMsg('Invalid file type');
+      }
     }
+    $scope.newIndex.forEach((obj) => {
+      for (const i in obj) {
+        $scope.indexFile[i] = {
+          name: i,
+          index: obj[i]
+        };
+      }
+    });
+    $scope.indexReveal = true;
+    $scope.searchTable = false;
   };
 
   $scope.searchIndex = () => {
     const searchValue = $scope.searchWord;
     const fileSearch = $scope.searchedFile;
+    $scope.results = [];
     if (!fileSearch) {
-      resMsg('No file selected');
+      retMsg('No file selected');
     } else if (searchValue === '' || searchValue === undefined) {
-      resMsg('Search field cannot be blank');
+      retMsg('Search field cannot be blank');
     } else if (Object.keys($scope.indexFile).length === 0) {
-      resMsg('Create an index first');
+      retMsg('Create an index first');
+    }
+    if (fileSearch === 'all') {
+      for (const file of Object.keys($scope.indexFile)) {
+        $scope.result = $scope.indexInstance.searchIndex(file, searchValue);
+        $scope.results.push($scope.result);
+      }
     } else {
-      $scope.results = $scope.indexInstance.searchIndex(fileSearch, searchValue);
+      $scope.result = $scope.indexInstance.searchIndex(fileSearch, searchValue);
+      $scope.results.push($scope.result);
     }
-    for (const result in $scope.results) {
-      $scope.searchFile[result] = {
-        name: result,
-        index: $scope.results[result]
-      };
-    }
+    $scope.results.forEach((result) => {
+      for (const i in result) {
+        $scope.searchFile[i] = {
+          name: i,
+          index: result[i]
+        };
+      }
+    });
     $scope.indexReveal = false;
     $scope.searchTable = true;
   };

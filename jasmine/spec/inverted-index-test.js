@@ -47,15 +47,15 @@ describe('Inverted Index Test Suite', () => {
   */
 
   describe('Read book data', () => {
-    beforeEach(() => {
-      index.createIndex('goodJSON', goodJSON);
-      index.createIndex('invalid', invalid);
-    });
+    // beforeEach(() => {
+    //   index.createIndex('goodJSON', goodJSON);
+    //   index.createIndex('invalid', invalid);
+    // });
     it('should ensure that JSON file is not empty', () => {
       expect(goodJSON.length > 0).toBeTruthy();
     });
     it('reads valid and populated JSON files', () => {
-      expect(index.createIndex('goodJSON', goodJSON)).toBeTruthy();
+      expect(index.checkJSON(goodJSON)).toBeTruthy();
     });
     it('rejects an invalid file', () => {
       expect(index.createIndex('invalid', invalid)).toBeFalsy();

@@ -55,166 +55,167 @@
   <section class="landing">
     <div class="container-fluid">
       <div class="row main-body">
-        <div class="bottom-pane col-xs-10 col-xs-offset-1">
-          <div class="row">
-            <div class="main" ng-controller="MainController">
-              <div class="container">
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Message</h4>
-                      </div>
-                      <div class="modal-body">
-                        {{message}}
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
+        <div class="row">
+          <div class="main" ng-controller="MainController">
+            <!--modal-->
+            <div class="container">
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <!-- modal content -->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Message</h4>
+                    </div>
+                    <div class="modal-body">
+                      {{message}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
-                <div class="container" style="background-color:azure;">
-      <div class="row">
-        <div class="col-md-3" style="background-color:azure;">
-          <p>
-          </p>
-          <h3> About this Application </h3>
-          <br>
-          <p>
-            This Inverted Index allows you to perform quick searches for a number of words. An
-            inverted index consists of a list of all the unique words that appear
-            in any document, and for each word, a list of the documents in which
-            it appears.
-          </p>
-          <hr>
-          <p>
-          </p>
-          <h4> How to use the application </h4>
-          <p>
-          </p>
-          <p> 1. Upload a valid JSON file </p> <br>
-          <p> 2. Select file to index and use the create index button to generate the
-            index </p> <br>
-          <p> 3. Enter word(s) to search.</p><br>
-          <p></p>
-        </div>
+              </div>
+              <!--upload class-->
+              <div class="container" style="background-color:azure;">
                 <div class="row">
-                  <div class="col-md-5">
-                    <div class="row">
-                      <h4>Upload file</h4>
-                      <input type="file" value="indexFile" id="indexUploadFile" multiple>
-                    </div>
-                    <br/>
-                    <div class="row">
-                      <p>Choose a file to index:</p>
-                      <select id="fileNames" ng-model="addFile">
+                  <div class="col-md-3" style="background-color:azure;">
+                    <p>
+                    </p>
+                    <h3> About this Application </h3>
+                    <br>
+                    <p>
+                      This Inverted Index allows you to perform quick searches for a number of words. An
+                      inverted index consists of a list of all the unique words that
+                      appear in any document, and for each word, a list of the documents
+                      in which it appears.
+                    </p>
+                    <hr>
+                    <p>
+                    </p>
+                    <h4> How to use the application </h4>
+                    <p>
+                    </p>
+                    <p> 1. Upload a valid JSON file </p> <br>
+                    <p> 2. Select file to index and use the create index button to generate
+                      the index </p> <br>
+                    <p> 3. Enter word(s) to search.</p><br>
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="row">
+                        <h4>Upload file</h4>
+                        <input type="file" value="indexFile" id="indexUploadFile" multiple>
+                      </div>
+                      <br/>
+                      <div class="row">
+                        <p>Choose a file to index:</p>
+                        <select id="fileNames" ng-model="addFile">
                         <option value="nofile" disabled selected> Choose a file to index</option>
                         <option ng-model="addFile" ng-repeat="(file, content) in uploadFile" value="{{file}}">{{file}}</option>
                       <option value="all" ng-model="addFile"  ng-if="keys(uploadFile).length > 1"> All files</option>
                         </select>
-                    </div>
-                    <br/>
-                    <div class="row">
-                      <button type="button" class="btn btn-custom" id="create-index" ng-click="createIndex()">Create Index</button>
-                    </div>
-                    <div class="table-display" ng-if="indexReveal" ng-repeat="file in indexFile" id="upload-index">
+                      </div>
                       <br/>
-                      <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i>  : Present in entry<br/>
-                        <i class="fa fa-close" style="color:red"></i> : Absent from
-                        entry </p><br/><br/>
-                      <p class="tbl-intro" ng-if="indexReveal">Index created for {{ file.name }}</p>
-                      <table class="table table-hover table-responsive">
-                        <thead>
-                          <th>Word</th>
-                          <th ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                            {{ file.name }} : Entry {{$index + 1}}
-                          </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="(key , value) in file.index">
-                            <td>{{ key }}</td>
-                            <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                              <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green"></i></span>
-                              <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red"></i></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                  </div>
-                  <div class="row col-md-4">
-                    <div class="row">
-                      <div class="span12">
-                        <h4>Search</h4>
-                        <form id="custom-search-form" class="form-search form-horizontal">
-                          <div class="input-append span12">
-                            <input type="text" class="search-query" id="search-terms" ng-model="searchWord" placeholder="Search"
-                              required>
-                              <button type="submit" class="btn" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></i></button>
-                              <br/>
-                          </div>
-                        </form>
+                      <div class="row">
+                        <button type="button" class="btn btn-custom" id="create-index" ng-click="createIndex()">Create Index</button>
+                      </div>
+                      <div class="table-display" ng-if="indexReveal" ng-repeat="file in indexFile" id="upload-index">
                         <br/>
-                        <div class="form-group">
-                          <p>Choose a file to search:</p>
-                          <select id="fileNames" ng-model="searchedFile">
+                        <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i> v : Present in entry<br/>
+                          <i class="fa fa-close" style="color:red"></i> x: Absent
+                          from entry </p><br/><br/>
+                        <p class="tbl-intro" ng-if="indexReveal">Index created for {{ file.name }}</p>
+                        <table class="table table-hover table-responsive">
+                          <thead>
+                            <th>Word</th>
+                            <th ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
+                              {{ file.name }} : Entry {{$index + 1}}
+                            </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="(key , value) in file.index">
+                              <td>{{ key }}</td>
+                              <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
+                                <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green">v</i></span>
+                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red">x</i></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <br/>
+                      <br/>
+                      <br/>
+                      <br/>
+                    </div>
+                    <div class="row col-md-4">
+                      <div class="row">
+                        <div class="span12">
+                          <h4>Search</h4>
+                          <form id="custom-search-form" class="form-search form-horizontal">
+                            <div class="input-append span12">
+                              <input type="text" class="search-query" id="search-terms" ng-model="searchWord" placeholder="Search"
+                                required>
+                                <button type="submit" class="btn" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></i></button>
+                                <br/>
+                            </div>
+                          </form>
+                          <br/>
+                          <div class="form-group">
+                            <p>Choose a file to search:</p>
+                            <select id="fileNames" ng-model="searchedFile">
                           <option value="nofile" disabled selected> Choose a file to search </option>
                             <option ng-model="searchedFile" ng-repeat="(file, content) in indexFile" value="{{file}}">{{file}}</option>
                             <option value="all" ng-model="searchedFile"  ng-if="keys(indexFile).length > 1"> All files</option>
                               </select>
+                          </div>
                         </div>
                       </div>
+                      <br/>
+                      <br/>
+                      <div class="table-display" ng-if="searchTable" ng-repeat="file in searchFile" id="search-index">
+                        <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i> v : Present in entry<br/>
+                          <i class="fa fa-close" style="color:red"></i> x: Absent
+                          from entry </p><br/><br/>
+                        <p class="tbl-intro" ng-model="searchWord" ng-if="searchTable">Showing search results for {{searchWord}} in {{file.name}}</p>
+                        <table class="table table-hover table-responsive">
+                          <thead>
+                            <tr>
+                              <th>Word</th>
+                              <th ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
+                                {{ file.name}}: Entry {{$index + 1}}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="(key , value) in file.index">
+                              <td>{{key}}</td>
+                              <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
+                                <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green">v</i></span>
+                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red">x</i></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <br/>
+                      <br/>
+                      <br/>
                     </div>
-                    <br/>
-                    <br/>
-                    <div class="table-display" ng-if="searchTable" ng-repeat="file in searchFile" id="search-index">
-                      <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i>                        : Present in entry<br/>
-                        <i class="fa fa-close" style="color:red"></i> : Absent from
-                        entry </p><br/><br/>
-                      <p class="tbl-intro" ng-model="searchWord" ng-if="searchTable">Showing search results for {{searchWord}} in {{file.name}}</p>
-                      <table class="table table-hover table-responsive">
-                        <thead>
-                          <tr>
-                            <th>Word</th>
-                            <th ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                              {{ file.name}}: Entry {{$index + 1}}
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="(key , value) in file.index">
-                            <td>{{key}}</td>
-                            <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                              <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green"></i></span>
-                              <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red"></i></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <br/>
-                    <br/>
-                    <br/>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer">
-          <p>(c) 2017 Ike Grace | <i class="fa fa-github" aria-hidden="true"></i>            <a href="https://github.com/andela-gike/">@andela-gike</a></p>
-        </div>
       </div>
-    </div>
   </section>
 </body>
+<footer class="container-fluid">
+  <p id="right">(c) 2017 Ike Grace</p>
+</footer>
 
 </html>
