@@ -1,69 +1,147 @@
-.container{
-    margin-top: 90px;
-}
-.input-group .form-control {
-    margin-top: inherit;
+@import url('https://fonts.googleapis.com/css?family=Muli');
+body {
+  font-family: 'Muli', sans-serif;
+  background: #ffffff;
+  color: #000000;
 }
 
-footer {
-    text-align: center;
-    background: #333;
-    padding: 15px 0;
-    margin-top: 10%;
+.container {
+  padding-right: 10px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 40px;
 }
-input, label {
-    display: block;
+
+.col-md-3 {
+  margin-right: 20px;
+}
+
+.row {
+  margin-right: -15px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #252839;
+  font-weight: bold;
+}
+
+.inst {
+  text-decoration: underline;
+}
+
+.footer {
+  text-decoration: none;
+  background: #252839;
+  color: #ffffff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.footer a {
+  text-decoration: none;
+  background: #252839;
+  color: #ffffff;
+}
+
+.table-hover {
+  color: #252839;
+}
+
+.landing {
+  width: 100%;
+  height: 100%;
+}
+
+.instruct {
+  font-size: 11pt;
+}
+
+.myjumbotron {
+  opacity: 0.7;
+  background-color: #252839;
+  color: #ffffff;
+  padding: 25px 5px 25px 5px;
+}
+
+.tbl-intro {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.btn-custom,
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active {
+  background-color: #252839;
+  color: #ffffff;
+  outline: none;
+}
+
+.main-header {
+  color: #252839;
+}
+
+input,
+select,
+textarea {
+  color: #252839;
 }
 
 .fa {
-    display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#indexUploadFile{
-  margin: 10px;
-}
-#filenames{
-  margin-bottom: 10px;
+textarea:focus,
+input:focus {
+  color: #252839;
 }
 
-#createIndex{
-  margin: 10px;
-}
-input[type=file]::-webkit-file-upload-button {
-    border: 1px solid grey;
-    background: #ffffff;
+#custom-search-form {
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
 }
 
-#right{
-    color: #ffffff;
+#custom-search-form .search-query {
+  padding-right: 3px;
+  padding-right: 4px \9;
+  padding-left: 3px;
+  padding-left: 4px \9;
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
-.mdl-mini-footer {
-    height: 5px;
-    margin-top: 50px;
+#custom-search-form button {
+  border: 0;
+  background: none;
+  padding: 2px 5px;
+  margin-top: 2px;
+  position: relative;
+  left: -28px;
+  margin-bottom: 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  color: #000000;
 }
 
-input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].btn-block {
-    width: 30%;
+.search-query:focus+button {
+  z-index: 3;
 }
-
-.btn .btn-primary .btn-sm btn-block {
-    max-width: 1%;
-}
-
-.btn-block {
-    display: block;
-    width: 20%;
-}
-
-.btn-block+.btn-block {
-    margin-top: 0%;
-	max-width: 20%;
-    margin-left: 50%;
-}
-
