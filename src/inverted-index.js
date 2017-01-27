@@ -25,6 +25,7 @@ class Index {
   checkJSON(file) {
     const resFile = JSON.parse(file);
     if (resFile[0] && resFile[0].title) {
+      this.resFile = resFile;
       return resFile;
     }
     return false;
@@ -40,6 +41,7 @@ class Index {
    */
   tidyText(words) {
     const tidiedWords = words.replace(/\W+/g, ' ').trim().split(' ');
+    this.tidiedWords = tidiedWords;
     return tidiedWords;
   }
 
@@ -127,12 +129,13 @@ class Index {
   searchWords(terms) {
     let toSearch = '';
     for (let i = 0; i < arguments.length; i += 1) {
-      if (Array.isArray(arguments[i])) {
+      if (Array.isArray(...[i])) {
         arguments[i].join(' ');
       }
       // toSearch += arguments[i] + ' ';
       toSearch += `${arguments[i]} `;
     }
+    this.toSearch = toSearch;
     return toSearch.split(',').join(' ');
   }
 
@@ -178,6 +181,7 @@ class Index {
         results[searchTerms[index]] = file[term];
       }
     });
+    this.results = results;
     return results;
   }
 }
