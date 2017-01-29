@@ -1,0 +1,9 @@
+avoid repeating code and stay DRY(line 52, 53).
+remove redundant code.(line 51 to 53).
+checkJson should include text and not only title
+Ensure that error message are return when there is an error.
+Include a try catch error handling.
+test for the opposite JSON(line)
+In inverted-index-text the falsy is generic so include that it sends an error message(line)
+refactor my multi-word search(line)
+Return the word  but the the arry should be empty(line)

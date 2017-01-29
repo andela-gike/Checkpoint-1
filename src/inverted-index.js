@@ -132,7 +132,6 @@ class Index {
       if (Array.isArray(...[i])) {
         arguments[i].join(' ');
       }
-      // toSearch += arguments[i] + ' ';
       toSearch += `${arguments[i]} `;
     }
     this.toSearch = toSearch;
