@@ -5,3 +5,8 @@
 [![Code Climate](https://codeclimate.com/github/andela-gike/Checkpoint-1/badges/gpa.svg)](https://codeclimate.com/github/andela-gike/Checkpoint-1)
 
 # inverted-index
+// if (Object.keys(this.index) === 0) {
+    //   return false;
+    // } else if (typeof filePath !== 'string' || typeof filePath === 'undefined') {
+    //   return this.index;
+    // }

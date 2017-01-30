@@ -1,5 +1,3 @@
-/* eslint no-undef:0 */
-/* eslint no-unused-vars:0 */
 
 /**
  * Index Class
@@ -77,7 +75,7 @@ class Index {
         }
       });
     }
-    if (!this.index.hasOwnProperty(filePath)) {
+    if (!this.index[filePath]) {
       this.index[filePath] = wordsIndex;
     }
     this.files[filePath] = file.length;
@@ -93,9 +91,9 @@ class Index {
    * @returns {object} An object of available files
    */
   getFiles(filePath) {
-    if (Object.keys(this.files) === 0) {
+    if (Object.keys(this.files).length === 0) {
       return false;
-    } else if (typeof filePath !== 'string' || typeof filePath === 'undefined') {
+    } else if (typeof filePath !== 'string') {
       return this.files;
     }
     return this.files[filePath];
@@ -110,22 +108,13 @@ class Index {
    * @returns {object} An object of indices
    */
   getIndex(filePath) {
-    if (Object.keys(this.index) === 0) {
-      return false;
-    } else if (typeof filePath !== 'string' || typeof filePath === 'undefined') {
-      return this.index;
-    }
     return this.index[filePath];
   }
 
-  /**
-   * searchWords
-   *
-   * Gets the search words passed, refactors them for searching
-   *
-   * @params {string} terms
-   * @returns {string} A string of words to search
-   */
+   //* searchWords
+   //* Gets the search words passed, refactors them for searching
+   //* @params {string} terms
+   //* @returns {string} A string of words to search
   searchWords(terms) {
     let toSearch = '';
     for (let i = 0; i < arguments.length; i += 1) {
@@ -176,7 +165,7 @@ class Index {
     const results = {};
 
     searchTerms.forEach((term, index) => {
-      if (file.hasOwnProperty(term)) {
+      if (file[term]) {
         results[searchTerms[index]] = file[term];
       }
     });
