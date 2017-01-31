@@ -21,12 +21,16 @@ class Index {
    * or a JSON object if valid file
    */
   checkJSON(file) {
-    const resFile = JSON.parse(file);
-    if (resFile[0] && resFile[0].title) {
-      this.resFile = resFile;
-      return resFile;
+    try {
+      const resFile = JSON.parse(file);
+      if (resFile[0] && resFile[0].title) {
+        this.resFile = resFile;
+        return resFile;
+      }
+    } catch (e) {
+      const errorMsg = 'Invalid JSON file! Please ensure it is properly formatted and try again. Thank you';
+      throw new Error(errorMsg);
     }
-    return false;
   }
 
   /**
