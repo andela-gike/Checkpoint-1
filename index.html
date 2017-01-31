@@ -13,6 +13,7 @@
       crossorigin="anonymous">
       <link rel="stylesheet" href="src/styles/style.css" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+          <link rel="stylesheet" href="src/styles/font-awesome-4.7.0/css/font-awesome.min.css">
           <title>Inverted Index</title>
 </head>
 
@@ -113,8 +114,8 @@
                       </div>
                       <div class="table-display" ng-if="indexReveal" ng-repeat="file in indexFile" id="upload-index">
                         <br/>
-                        <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i> v : Present in entry<br/>
-                          <i class="fa fa-close" style="color:red"></i> x: Absent
+                        <p><strong>Key:</strong><br/><i class="fa fa-check-square-o" aria-hidden="true" style="color:limegreen"></i>  : Present in entry<br/>
+                          <i class="fa fa-close" style="color:red"></i> : Absent
                           from entry </p><br/><br/>
                         <p class="tbl-intro" ng-if="indexReveal">Index created for {{ file.name }}</p>
                         <table class="table table-hover table-responsive">
@@ -129,8 +130,8 @@
                             <tr ng-repeat="(key , value) in file.index">
                               <td>{{ key }}</td>
                               <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                                <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green">v</i></span>
-                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red">x</i></span>
+                                <span ng-if="value.includes($index)"><i class="fa fa-check-square-o" aria-hidden="true" style="color:limegreen"></i></span>
+                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red"></i></span>
                               </td>
                             </tr>
                           </tbody>
@@ -145,11 +146,18 @@
                       <div class="row">
                         <div class="span12">
                           <h4>Search</h4>
+                          <!--<form action="" class="search-form">
+                <div class="form-group has-feedback">
+            		<label for="search" class="sr-only">Search</label>
+            		<input type="text" class="form-control" name="search" id="search-terms" ng-model="searchWord" placeholder="Search" required><button type="submit" class="btn" id="search-button" ng-click="searchIndex()">
+              		<span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span></button>
+            	</div>
+            </form>-->
                           <form id="custom-search-form" class="form-search form-horizontal">
                             <div class="input-append span12">
                               <input type="text" class="search-query" id="search-terms" ng-model="searchWord" placeholder="Search"
                                 required>
-                                <button type="submit" class="btn" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></i></button>
+                                <button type="submit" class="btn" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true" ng-click="searchIndex()"></span></i></button>
                                 <br/>
                             </div>
                           </form>
@@ -167,8 +175,8 @@
                       <br/>
                       <br/>
                       <div class="table-display" ng-if="searchTable" ng-repeat="file in searchFile" id="search-index">
-                        <p><strong>Key:</strong><br/><i class="fa fa-check" style="color:green"></i> v : Present in entry<br/>
-                          <i class="fa fa-close" style="color:red"></i> x: Absent
+                        <p><strong>Key:</strong><br/><i class="fa fa-check-square-o" aria-hidden="true" style="color:limegreen"></i> : Present in entry<br/>
+                          <i class="fa fa-close" style="color:red"></i> : Absent
                           from entry </p><br/><br/>
                         <p class="tbl-intro" ng-model="searchWord" ng-if="searchTable">Showing search results for {{searchWord}} in {{file.name}}</p>
                         <table class="table table-hover table-responsive">
@@ -184,8 +192,8 @@
                             <tr ng-repeat="(key , value) in file.index">
                               <td>{{key}}</td>
                               <td ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
-                                <span ng-if="value.includes($index)"><i class="fa fa-check" style="color:green">v</i></span>
-                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red">x</i></span>
+                                <span ng-if="value.includes($index)"><i class="fa fa-check-square-o" aria-hidden="true" style="color:limegreen"></i></span>
+                                <span ng-if="!value.includes($index)"><i class="fa fa-close" style="color:red"></i></span>
                               </td>
                             </tr>
                           </tbody>

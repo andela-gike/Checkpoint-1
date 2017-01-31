@@ -1,6 +1,3 @@
-/* eslint no-undef:0 */
-/* eslint no-unused-vars:0 */
-
 const app = angular.module('invIndex', []);
 
 app.controller('MainController', ['$scope', ($scope) => {
@@ -11,6 +8,7 @@ app.controller('MainController', ['$scope', ($scope) => {
   $scope.uploadFile = {};
   $scope.indexFile = {};
   $scope.keys = Object.keys;
+
   $scope.arrayCount = (number) => {
     return new Array(number);
   };
