@@ -71,7 +71,6 @@ describe('Inverted Index Test Suite', () => {
   describe('Populate Index', () => {
     it('reads file when an index is created', () => {
       expect(index.getIndex('goodJSON').length).not.toEqual(0);
-      // expect(index.getIndex('invalid').length).toBeEqual(0);
     });
   });
 
