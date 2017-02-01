@@ -1,0 +1,31 @@
+.container{
+    margin-top: 90px;
+}
+.input-group .form-control {
+    margin-top: inherit;
+}
+
+.mdl-mini-footer {
+    height: 5px;
+    margin-top: 50px;
+}
+
+input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].btn-block {
+    width: 30%;
+}
+
+.btn .btn-primary .btn-sm btn-block {
+    max-width: 1%;
+}
+
+.btn-block {
+    display: block;
+    width: 20%;
+}
+
+.btn-block+.btn-block {
+    margin-top: 0%;
+	max-width: 20%;
+    margin-left: 50%;
+}
+

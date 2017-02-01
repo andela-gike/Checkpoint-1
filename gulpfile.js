@@ -21,7 +21,6 @@ gulp.task('browserSync', () => {
   });
 });
 
-
 gulp.task('watch', () => {
   gulp.watch('./src/styles/*.css', browserSync.reload);
   gulp.watch('index.html', browserSync.reload);
