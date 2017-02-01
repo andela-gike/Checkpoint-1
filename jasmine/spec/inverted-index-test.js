@@ -92,7 +92,7 @@ describe('Inverted Index Test Suite', () => {
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice && searchResults.goodJSON.rings).toEqual([0] && [1]);
     });
-    it('it successfully searches an array of words', () => {
+    it('should successfully searches an array of words', () => {
       searchResults = index.searchIndex('goodJSON', '[dwarf elf]');
       expect(searchResults).toEqual({
         goodJSON: {

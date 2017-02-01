@@ -1,5 +1,6 @@
 **/*{.,-}min.js
 **/*{.,-}min.js
+**/*{.,-}min.js
 node_modules
-eslintrc
+.eslintrc
 jasmine/lib/jasmine-2.3.4

@@ -121,11 +121,11 @@ class Index {
    //* @returns {string} A string of words to search
   searchWords(terms) {
     let toSearch = '';
-    for (let i = 0; i < arguments.length; i += 1) {
-      if (Array.isArray(...[i])) {
-        arguments[i].join(' ');
+    for (let word = 0; word < arguments.length; word += 1) {
+      if (Array.isArray(...[word])) {
+        arguments[word].join(' ');
       }
-      toSearch += `${arguments[i]} `;
+      toSearch += `${arguments[word]} `;
     }
     this.toSearch = toSearch;
     return toSearch.split(',').join(' ');
