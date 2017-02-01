@@ -8,29 +8,30 @@
     "npm": "4.1.2"
   },
   "dependencies": {
-    "browser-sync": "^2.18.6",
+    "browser-sync": "^2.18.7",
     "coveralls": "^2.11.15",
     "eslint": "^3.14.0",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
     "gulp-eslint": "^3.0.1",
     "gulp-jasmine": "^2.4.2",
     "gulp-jasmine-browser": "^1.7.1",
     "gulp-livereload": "^3.8.1",
+    "gulp-watch": "^4.3.11",
     "jasmine-core": "^2.5.2",
     "jasmine-node": "^1.14.5",
     "request": "^2.79.0"
   },
   "devDependencies": {
     "async": "^2.1.4",
-    "gulp": "^3.9.1",
     "gulp-coverage": "^0.3.38",
     "gulp-istanbul": "^1.1.1"
   },
   "scripts": {
     "start": "gulp",
-    "test": "./node_modules/.bin/jasmine-node jasmine/spec/inverted-index.js"
+    "test": "./node_modules/.bin/jasmine-node jasmine/spec/inverted-index-test.js"
   },
   "repository": {
     "type": "git",
