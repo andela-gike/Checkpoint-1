@@ -2,4 +2,4 @@
 **/*{.,-}min.js
 node_modules
 eslintrc
-jasmine/jasmine-2.3.4
+jasmine/lib/jasmine-2.3.4

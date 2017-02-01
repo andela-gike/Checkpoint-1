@@ -19,4 +19,4 @@ ratings:
   - "**.module"
 exclude_paths:
 - node_modules/
-- jasmine/jasmine-2.3.4
+- jasmine/lib/jasmine-2.3.4
