@@ -5,5 +5,3 @@ coverage
 dist/
 .DS_Store
 /font-awesome-4.7.0/
-.eslintrc
-feedback.md
