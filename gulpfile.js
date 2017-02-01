@@ -15,21 +15,26 @@ gulp.task('browserSync', () => {
       baseDir: './',
       index: 'index.html',
     },
-    port: process.env.PORT || 8080
+    port: process.env.PORT || 8080,
+    ui: false,
+    ghostMode: false
   });
 });
 
 
 gulp.task('watch', () => {
-  gulp.watch('/src/styles/*.css', browserSync.reload);
-  gulp.watch('/index.html', browserSync.reload);
-  gulp.watch('/src/inverted-index.js', browserSync.reload);
+  gulp.watch('./src/styles/*.css', browserSync.reload);
+  gulp.watch('index.html', browserSync.reload);
+  gulp.watch('./src/inverted-index.js', browserSync.reload);
+  gulp.watch('jasmine/spec/inverted-index-test.js', browserSync.reload);
 });
 
 gulp.task('jasmine', () => {
-  gulp.src(['src/**/*.js', 'spec/**/*_spec.js'])
+  gulp.src(['src/inverted-index.js', 'jasmine/spec/inverted-index-test.js'])
     .pipe(jasmineBrowser.specRunner())
-    .pipe(jasmineBrowser.server({ port: 8888 }));
+    .pipe(jasmineBrowser.server({
+      port: 8888
+    }));
 });
 
-gulp.task('default', ['eslint', 'browserSync', 'jasmine', 'watch']);
+gulp.task('default', ['browserSync', 'jasmine', 'watch']);
