@@ -6,10 +6,8 @@ node_js:
   - "6.1"
   - "5.11"
 before_install:
- - export CHROME_BIN=/usr/bin/google-chrome
- - export DISPLAY=:99.0
- - sh -e /etc/init.d/xvfb start
-
- after_script:
- - cat ./coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+ export CHROME_BIN=/usr/bin/google-chrome
+ export DISPLAY=:99.0
+ sh -e /etc/init.d/xvfb start
+after_script:
  - node node_modules/codeclimate-test-reporter/bin/codeclimate < coverage/**/lcov.info
