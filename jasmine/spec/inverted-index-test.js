@@ -7,7 +7,8 @@ describe('Inverted Index Test Suite', () => {
     },
     {
       "title": "The Lord of the Rings: The Fellowship of the Ring.",
-      "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+      "text": "An unusual alliance of man, elf, dwarf, wizard and \
+      hobbit seek to destroy a powerful ring."
     }
   ]`;
   const badJSON = `[
