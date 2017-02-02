@@ -24,7 +24,7 @@ describe('Inverted Index Test Suite', () => {
 
   const invalid = '[]';
 
-  beforeEach(() => {
+  beforeAll(() => {
     index = new Index();
     index.createIndex('goodJSON', goodJSON);
     index.createIndex('invalid', invalid);
