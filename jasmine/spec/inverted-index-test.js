@@ -39,7 +39,6 @@ describe('Inverted Index Test Suite', () => {
       expect(index instanceof Index).toBeTruthy();
     });
   });
-
   /**
    * Read book data test suite
    */

@@ -12,6 +12,12 @@ To create an inverted index, we first split the content field of each document i
 
 1. Clone the repository.
 2. Run `npm install`
+3. Run `gulp browserSync` to startup browsersync
+
+####Testing Process
+To see the results of the test, run the gulp jasmine task on the command line with `gulp jasmine`, it opens up the specrunner browser.
+
+#### Major Dependecies
 3. Run `gulp` to startup browsersync
 
 ####Testing Process
@@ -32,6 +38,7 @@ Run the `SpecRunner.html` in the base dir
 * [Inverted index - wikipedia.com](https://en.wikipedia.org/wiki/Inverted_index)
 
 * [Inverted index - elastic search](https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html)
+
 
 ####Licence
 

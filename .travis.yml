@@ -11,3 +11,5 @@ before_install:
  - sh -e /etc/init.d/xvfb start
 after_script:
  - node node_modules/codeclimate-test-reporter/bin/codeclimate < coverage/**/lcov.info
+service_name: travis-ci
+repo_token: abfDhuSVyNaxF1LZK1EN8mSs9vBVMAC0Y
