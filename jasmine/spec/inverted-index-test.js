@@ -7,7 +7,8 @@ describe('Inverted Index Test Suite', () => {
     },
     {
       "title": "The Lord of the Rings: The Fellowship of the Ring.",
-      "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+      "text": "An unusual alliance of man, elf, dwarf, wizard and \
+      hobbit seek to destroy a powerful ring."
     }
   ]`;
   const badJSON = `[
@@ -55,7 +56,7 @@ describe('Inverted Index Test Suite', () => {
     it('Should throw an error if a json file is empty or badly formatted', () => {
       expect(() => {
         index.checkJSON('invalid', invalid);
-      }).toThrow(new Error('Invalid JSON file! Please ensure it is properly formatted and try again. Thank you'));
+      }).toThrow(new Error('Invalid JSON file! Please ensure it is properly formatted and try again.'));
     });
 
     it('rejects an invalid file', () => {

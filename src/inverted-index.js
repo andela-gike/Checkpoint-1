@@ -28,7 +28,7 @@ class Index {
         return resFile;
       }
     } catch (e) {
-      const errorMsg = 'Invalid JSON file! Please ensure it is properly formatted and try again. Thank you';
+      const errorMsg = 'Invalid JSON file! Please ensure it is properly formatted and try again.';
       throw new Error(errorMsg);
     }
   }
