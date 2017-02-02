@@ -1,6 +1,7 @@
+---
 engines:
   csslint:
-    enabled: true
+    enabled: false
   duplication:
     enabled: true
     config:
@@ -8,13 +9,17 @@ engines:
       - javascript
   eslint:
     enabled: true
+    channel: "eslint-2"
   fixme:
     enabled: true
 ratings:
   paths:
   - "**.css"
+  - "**.inc"
   - "**.js"
+  - "**.module"
 exclude_paths:
 - node_modules/
 - "jasmine/lib/jasmine-2.3.4/jasmine.js"
 - "jasmine/lib/jasmine-2.3.4/jasmine-html.js"
+- "src/app.js"
