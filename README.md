@@ -17,7 +17,7 @@ To create an inverted index, we first split the content field of each document i
 ####Testing Process
 Run the `SpecRunner.html` in the base dir
 
-####Dependecies
+####Dependencies
 * [Gulp](http://gulpjs.com/)
 * [Angular1x](https://angularjs.org/)
 * [Jasmine](http://jasmine.github.io/2.4/introduction.html)
