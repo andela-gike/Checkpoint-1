@@ -33,14 +33,11 @@ describe('Inverted Index Test Suite', () => {
   /**
    * Index instance test suit
    */
-  describe('Inverted Index Instance', () => {
-    describe('If instantiated', () => {
-      it('should be an instance of the Index class', () => {
-        expect(index instanceof Index).toBeTruthy();
-      });
+  describe('If instantiated', () => {
+    it('should be an instance of the Index class', () => {
+      expect(index instanceof Index).toBeTruthy();
     });
   });
-
   /**
    * Read book data test suite
    */
