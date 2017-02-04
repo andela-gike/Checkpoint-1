@@ -90,7 +90,7 @@ app.controller('MainController', ['$scope', ($scope) => {
         };
       }
     });
-    $scope.indexReveal = false;
+    $scope.indexReveal = true;
     $scope.searchTable = true;
   };
 

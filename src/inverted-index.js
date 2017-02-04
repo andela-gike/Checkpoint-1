@@ -1,4 +1,3 @@
-
 /**
  * Index Class
  *
@@ -6,6 +5,11 @@
  * @class
  */
 class Index {
+  /**
+   *
+   *
+   * @constructor
+   */
   constructor() {
     this.index = {};
     this.files = {};
@@ -20,17 +24,12 @@ class Index {
    * @returns {bool} | {object} A false boolean if file is not valid
    * or a JSON object if valid file
    */
-  checkJSON(file) {
-    try {
-      const resFile = JSON.parse(file);
-      if (resFile[0] && resFile[0].title) {
-        this.resFile = resFile;
-        return resFile;
-      }
-    } catch (e) {
-      const errorMsg = 'Invalid JSON file! Please ensure it is properly formatted and try again. Thank you';
-      throw new Error(errorMsg);
+  static checkJSON(file) {
+    const responseFile = JSON.parse(file);
+    if (responseFile[0] && responseFile[0].title) {
+      return responseFile;
     }
+    return false;
   }
 
   /**
@@ -41,10 +40,11 @@ class Index {
    * @param {string} words - Words in file
    * @returns {array} An array of words with no whitespace or punctuation
    */
-  tidyText(words) {
-    const tidiedWords = words.replace(/\W+/g, ' ').trim().split(' ');
-    this.tidiedWords = tidiedWords;
-    return tidiedWords;
+  static tidyText(words) {
+    return words.replace(/\W+/g, ' ')
+      .trim().split(' ').filter(text =>
+        text
+      );
   }
 
   /**
@@ -57,16 +57,16 @@ class Index {
    * @returns {object} An object of created indices
    */
   createIndex(filePath, file) {
-    file = this.checkJSON(file);
+    file = Index.checkJSON(file);
     if (!file) {
       return false;
     }
     const fileWords = [];
     const wordsIndex = {};
-    for (const doc of file) {
+    file.forEach((doc) => {
       const fileString = (`${doc.title} ${doc.text}`).toLowerCase();
-      fileWords.push(this.tidyText(fileString));
-    }
+      fileWords.push(Index.tidyText(fileString));
+    });
     for (const indexNo in fileWords) {
       const position = parseInt(indexNo, 10);
       fileWords[indexNo].forEach((word) => {
@@ -91,16 +91,16 @@ class Index {
    *
    * Returns the available files
    *
-   * @param {string} filePath - Path to the file
+   * @param {string} fileName - Name of the file
    * @returns {object} An object of available files
    */
-  getFiles(filePath) {
+  getFiles(fileName) {
     if (Object.keys(this.files).length === 0) {
       return false;
-    } else if (typeof filePath !== 'string') {
+    } else if (typeof fileName !== 'string') {
       return this.files;
     }
-    return this.files[filePath];
+    return this.files[fileName];
   }
 
   /**
@@ -108,17 +108,20 @@ class Index {
    *
    * Returns the index
    *
-   * @param {string} filePath - Path to the file
+   * @param {string} fileName - Name to the file
    * @returns {object} An object of indices
    */
-  getIndex(filePath) {
-    return this.index[filePath];
+  getIndex(fileName) {
+    return this.index[fileName];
   }
 
-   //* searchWords
-   //* Gets the search words passed, refactors them for searching
-   //* @params {string} terms
-   //* @returns {string} A string of words to search
+  /**
+   * searchIndex
+   * Search for terms in a file
+   * @param {String} terms word(s) to be searched in the index
+   * @param {String} filename file to search for words
+   * @return {Object} words and their index
+   */
   searchWords(terms) {
     let toSearch = '';
     for (let word = 0; word < arguments.length; word += 1) {
@@ -136,22 +139,22 @@ class Index {
    *
    * Checks whether searched terms are in the created index
    *
-   * @param {string} filePath
+   * @param {string} fileName
    * @param {string} terms
    * @returns {object} An object of the results
    */
-  searchIndex(filePath, ...terms) {
+  searchIndex(fileName, ...terms) {
     const results = {};
     let searchTerms = [];
     const toSearch = this.searchWords(...terms);
-    searchTerms = this.tidyText(toSearch.toLowerCase());
-    if (!filePath) {
+    searchTerms = Index.tidyText(toSearch.toLowerCase());
+    if (!fileName) {
       for (const file in this.index) {
         results[file] = this.searchResult(searchTerms, this.index[file]);
       }
     } else {
-      const searchFile = this.index[filePath];
-      results[filePath] = this.searchResult(searchTerms, searchFile);
+      const searchFile = this.index[fileName];
+      results[fileName] = this.searchResult(searchTerms, searchFile);
     }
     return results;
   }
