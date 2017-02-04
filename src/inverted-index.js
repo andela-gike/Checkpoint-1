@@ -122,7 +122,7 @@ class Index {
    * @param {String} filename file to search for words
    * @return {Object} words and their index
    */
-  searchWords(terms) {
+  static searchWords(terms) {
     let toSearch = '';
     for (let word = 0; word < arguments.length; word += 1) {
       if (Array.isArray(...[word])) {
@@ -130,7 +130,6 @@ class Index {
       }
       toSearch += `${arguments[word]} `;
     }
-    this.toSearch = toSearch;
     return toSearch.split(',').join(' ');
   }
 
@@ -146,15 +145,15 @@ class Index {
   searchIndex(fileName, ...terms) {
     const results = {};
     let searchTerms = [];
-    const toSearch = this.searchWords(...terms);
+    const toSearch = Index.searchWords(...terms);
     searchTerms = Index.tidyText(toSearch.toLowerCase());
     if (!fileName) {
       for (const file in this.index) {
-        results[file] = this.searchResult(searchTerms, this.index[file]);
+        results[file] = Index.searchResult(searchTerms, this.index[file]);
       }
     } else {
       const searchFile = this.index[fileName];
-      results[fileName] = this.searchResult(searchTerms, searchFile);
+      results[fileName] = Index.searchResult(searchTerms, searchFile);
     }
     return results;
   }
@@ -168,7 +167,7 @@ class Index {
    * @param {object} file
    * @returns {object} results
    */
-  searchResult(searchTerms, file) {
+  static searchResult(searchTerms, file) {
     const results = {};
 
     searchTerms.forEach((term, index) => {
@@ -176,7 +175,6 @@ class Index {
         results[searchTerms[index]] = file[term];
       }
     });
-    this.results = results;
     return results;
   }
 }
