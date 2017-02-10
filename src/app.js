@@ -26,9 +26,11 @@ app.controller('MainController', ['$scope', ($scope) => {
     let fileContent;
     reader.readAsText(file);
     reader.onload = (e) => {
-      fileContent = e.target.result;
-      $scope.uploadFile[file.name] = fileContent;
-      $scope.$apply();
+      fileContent = JSON.parse(e.target.result);
+      if (fileContent !== false) {
+        $scope.uploadFile[file.name] = fileContent;
+        $scope.$apply();
+      }
     };
   };
 
@@ -40,7 +42,8 @@ app.controller('MainController', ['$scope', ($scope) => {
     }
     if (addFile === 'all') {
       for (const file of Object.keys($scope.uploadFile)) {
-        $scope.indices = $scope.indexInstance.createIndex(file, $scope.uploadFile[file]);
+        $scope.indices = $scope.indexInstance
+        .createIndex(file, $scope.uploadFile[file]);
         $scope.newIndex.push($scope.indices);
       }
     } else {
@@ -66,6 +69,7 @@ app.controller('MainController', ['$scope', ($scope) => {
     const searchValue = $scope.searchWord;
     const fileSearch = $scope.searchedFile;
     $scope.results = [];
+    $scope.searchTable = false;
     if (!fileSearch) {
       modalMessage('No file selected, please select the file(s) you want to saerch');
     } else if (searchValue === '' || searchValue === undefined) {
