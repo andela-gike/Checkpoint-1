@@ -20,7 +20,7 @@ class Index {
    *
    * Checks whether the file is a JSON file
    *
-   * @param {object} file - Content of the file
+   * @param {object} responseFile - Content of the file
    * @returns {bool} | {object} A false boolean if file is not valid
    * or a JSON object if valid file
    */
@@ -134,9 +134,9 @@ class Index {
 
     searchTerms = Index.tidyText(toSearch.toLowerCase());
     if (!fileName) {
-      for (const file in this.index) {
+      this.index.forEach((file) => {
         results[file] = Index.searchResult(searchTerms, this.index[file]);
-      }
+      });
     } else {
       const searchFile = this.index[fileName];
       results[fileName] = Index.searchResult(searchTerms, searchFile);
