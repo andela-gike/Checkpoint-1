@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "browser-sync": "^2.18.7",
-    "coveralls": "^2.11.15",
+    "browserify": "^14.0.0",
+    "coveralls": "^2.11.16",
     "eslint": "^3.14.0",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-cli": "^1.2.2",
     "gulp-eslint": "^3.0.1",
     "gulp-jasmine": "^2.4.2",
@@ -22,7 +24,8 @@
     "gulp-watch": "^4.3.11",
     "jasmine-core": "^2.5.2",
     "jasmine-node": "^1.14.5",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "async": "^2.1.4",
@@ -31,7 +34,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "test": "./node_modules/.bin/jasmine-node jasmine/spec/inverted-index-test.js"
+    "test": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "repository": {
     "type": "git",

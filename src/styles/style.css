@@ -195,7 +195,8 @@ input:focus {
 
 footer {
     text-align: center;
-    margin-top: 10%;
+    margin-top: 8%;
+    width: 100%;
     background: rgb(51, 51, 51);
     padding: 15px 0px;
 }
