@@ -86,23 +86,6 @@ class Index {
   }
 
   /**
-   * getFiles
-   *
-   * Returns the available files
-   *
-   * @param {string} fileName - Name of the file
-   * @returns {object} An object of available files
-   */
-  getFiles(fileName) {
-    if (Object.keys(this.files).length === 0) {
-      return false;
-    } else if (typeof fileName !== 'string') {
-      return this.files;
-    }
-    return this.files[fileName];
-  }
-
-  /**
    * getIndex
    *
    * Returns the index
@@ -123,6 +106,7 @@ class Index {
    */
   static searchWords(terms) {
     let toSearch = '';
+
     for (let word = 0; word < arguments.length; word += 1) {
       if (Array.isArray(...[word])) {
         arguments[word].join(' ');
@@ -144,7 +128,10 @@ class Index {
   searchIndex(fileName, ...terms) {
     const results = {};
     let searchTerms = [];
+    const pass = new Date();
+    const now = pass.getTime() / 1000;
     const toSearch = Index.searchWords(...terms);
+
     searchTerms = Index.tidyText(toSearch.toLowerCase());
     if (!fileName) {
       for (const file in this.index) {
@@ -153,6 +140,10 @@ class Index {
     } else {
       const searchFile = this.index[fileName];
       results[fileName] = Index.searchResult(searchTerms, searchFile);
+    }
+
+    if (((pass.getTime() / 1000) - now) > 0) {
+      throw new Error('Search took too long.');
     }
     return results;
   }

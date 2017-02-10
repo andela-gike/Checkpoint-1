@@ -1,7 +1,9 @@
 const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const jasmineBrowser = require('gulp-jasmine-browser');
+const browserify = require('browserify');
 const browserSync = require('browser-sync').create();
+
 
 gulp.task('eslint', () => {
   gulp.src(['./src/*.js', 'jasmine/lib/spec/inverted-index-test.js'])
@@ -36,5 +38,12 @@ gulp.task('jasmine', () => {
       port: 8888
     }));
 });
+
+gulp.task('browserify', () =>
+   browserify('jasmine/spec/inverted-index-test.js')
+    .bundle()
+    .pipe(source('jasmine/spec/tests/index-test-spec1.js'))
+    .pipe(gulp.dest('./jasmine/spec/tests'))
+);
 
 gulp.task('default', ['browserSync', 'jasmine', 'watch']);

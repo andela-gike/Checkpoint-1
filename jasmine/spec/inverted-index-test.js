@@ -125,5 +125,10 @@ describe('Inverted Index Test Suite', () => {
         goodJSON: {}
       });
     });
+
+    it('should not take long to execute.', () => {
+      expect(() => { index.searchIndex('alice', 'fellowship'); }).not
+      .toThrowError('Search took too long.');
+    });
   });
 });
