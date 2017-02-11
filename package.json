@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "test": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+    "test": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
