@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const jasmineBrowser = require('gulp-jasmine-browser');
 const browserify = require('browserify');
 const browserSync = require('browser-sync').create();
+const source = require('vinyl-source-stream');
 
 
 gulp.task('eslint', () => {
@@ -42,7 +43,7 @@ gulp.task('jasmine', () => {
 gulp.task('browserify', () =>
    browserify('jasmine/spec/inverted-index-test.js')
     .bundle()
-    .pipe(source('jasmine/spec/tests/index-test-spec1.js'))
+    .pipe(source('index-test-spec1.js'))
     .pipe(gulp.dest('./jasmine/spec/tests'))
 );
 

@@ -134,7 +134,7 @@ class Index {
 
     searchTerms = Index.tidyText(toSearch.toLowerCase());
     if (!fileName) {
-      this.index.forEach((file) => {
+      Array.prototype.forEach.call(this.index, (file) => {
         results[file] = Index.searchResult(searchTerms, this.index[file]);
       });
     } else {
