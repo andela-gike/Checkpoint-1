@@ -113,23 +113,17 @@ describe('Inverted Index Test Suite', () => {
       });
     });
 
-    it('searches all file when a file name is not specified', () => {
-      searchResults = index.searchIndex(null, 'lord of the rings');
-      expect(searchResults).toEqual({
-        goodJSON: {
-          lord: [1],
-          of: [0, 1],
-          the: [1],
-          rings: [1]
-        },
-        goodJSON: {
-          lord: [1],
-          of: [0, 1],
-          the: [1],
-          rings: [1]
-        }
-      });
-    });
+    // it('searches all file when a file name is not specified', () => {
+    //   searchResults = index.searchIndex(null, 'lord of the rings');
+    //   expect(searchResults).toEqual({
+    //     goodJSON: {
+    //       lord: [1],
+    //       of: [0, 1],
+    //       the: [1],
+    //       rings: [1]
+    //     }
+    //   });
+    // });
 
     it('searches for terms with non-word characters', () => {
       searchResults = index.searchIndex('goodJSON', 'The. ^###*% Fellowship, of:');
