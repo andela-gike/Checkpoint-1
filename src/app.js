@@ -9,9 +9,7 @@ app.controller('MainController', ['$scope', ($scope) => {
   $scope.indexFile = {};
   $scope.keys = Object.keys;
 
-  $scope.arrayCount = (number) => {
-    return new Array(number);
-  };
+  $scope.arrayCount = number => new Array(number);
 
   const modalMessage = (msg) => {
     $scope.message = msg;
@@ -19,16 +17,19 @@ app.controller('MainController', ['$scope', ($scope) => {
   };
 
   $scope.uploadedFile = (file) => {
-    if (!/\.json$/.test(file.name.toString())) {
+    if (!/\.json$/g.test(file.name.toString())) {
+
       modalMessage('Upload a valid JSON file');
     }
     const reader = new FileReader();
     let fileContent;
     reader.readAsText(file);
     reader.onload = (e) => {
-      fileContent = e.target.result;
-      $scope.uploadFile[file.name] = fileContent;
-      $scope.$apply();
+      fileContent = JSON.parse(e.target.result);
+      if (fileContent !== false) {
+        $scope.uploadFile[file.name] = fileContent;
+        $scope.$apply();
+      }
     };
   };
 
@@ -39,10 +40,11 @@ app.controller('MainController', ['$scope', ($scope) => {
       modalMessage('No file selected');
     }
     if (addFile === 'all') {
-      for (const file of Object.keys($scope.uploadFile)) {
-        $scope.indices = $scope.indexInstance.createIndex(file, $scope.uploadFile[file]);
+      Object.keys($scope.uploadFile).forEach((file) => {
+        $scope.indices = $scope.indexInstance
+          .createIndex(file, $scope.uploadFile[file]);
         $scope.newIndex.push($scope.indices);
-      }
+      });
     } else {
       $scope.indices = $scope.indexInstance.createIndex(addFile, $scope.uploadFile[addFile]);
       $scope.newIndex.push($scope.indices);
@@ -66,20 +68,25 @@ app.controller('MainController', ['$scope', ($scope) => {
     const searchValue = $scope.searchWord;
     const fileSearch = $scope.searchedFile;
     $scope.results = [];
+    $scope.searchTable = false;
     if (!fileSearch) {
-      modalMessage('No file selected, please select the file(s) you want to saerch');
+      modalMessage(`No file selected, please select the file(s)
+       you want to search`);
     } else if (searchValue === '' || searchValue === undefined) {
-      modalMessage('Search field cannot be blank, please write the word(s) you want to find.');
+      modalMessage(`Search field cannot be blank,
+      please write the word(s) you want to find.`);
     } else if (Object.keys($scope.indexFile).length === 0) {
       modalMessage('Create an index first, before you can search.');
     }
     if (fileSearch === 'all') {
-      for (const file of Object.keys($scope.indexFile)) {
-        $scope.result = $scope.indexInstance.searchIndex(file, searchValue);
+      Object.keys($scope.uploadFile).forEach((file) => {
+        $scope.result = $scope.indexInstance
+        .searchIndex(file, searchValue);
         $scope.results.push($scope.result);
-      }
+      });
     } else {
-      $scope.result = $scope.indexInstance.searchIndex(fileSearch, searchValue);
+      $scope.result = $scope.indexInstance
+      .searchIndex(fileSearch, searchValue);
       $scope.results.push($scope.result);
     }
     $scope.results.forEach((result) => {
@@ -90,7 +97,7 @@ app.controller('MainController', ['$scope', ($scope) => {
         };
       }
     });
-    $scope.indexReveal = false;
+    $scope.indexReveal = true;
     $scope.searchTable = true;
   };
 

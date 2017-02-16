@@ -1,4 +1,3 @@
-
 /**
  * Index Class
  *
@@ -6,6 +5,11 @@
  * @class
  */
 class Index {
+  /**
+   *
+   *
+   * @constructor
+   */
   constructor() {
     this.index = {};
     this.files = {};
@@ -16,21 +20,17 @@ class Index {
    *
    * Checks whether the file is a JSON file
    *
-   * @param {object} file - Content of the file
+   * @param {object} responseFile - Content of the file
    * @returns {bool} | {object} A false boolean if file is not valid
    * or a JSON object if valid file
    */
-  checkJSON(file) {
-    try {
-      const resFile = JSON.parse(file);
-      if (resFile[0] && resFile[0].title) {
-        this.resFile = resFile;
-        return resFile;
-      }
-    } catch (e) {
-      const errorMsg = 'Invalid JSON file! Please ensure it is properly formatted and try again.';
-      throw new Error(errorMsg);
+
+  static checkJSON(responseFile) {
+    if (responseFile.length > 0
+      && responseFile[0].title && responseFile[0].text) {
+      return responseFile;
     }
+    return false;
   }
 
   /**
@@ -41,10 +41,11 @@ class Index {
    * @param {string} words - Words in file
    * @returns {array} An array of words with no whitespace or punctuation
    */
-  tidyText(words) {
-    const tidiedWords = words.replace(/\W+/g, ' ').trim().split(' ');
-    this.tidiedWords = tidiedWords;
-    return tidiedWords;
+  static tidyText(words) {
+    return words.replace(/\W+/g, ' ')
+      .trim().split(' ').filter(text =>
+        text
+      );
   }
 
   /**
@@ -52,21 +53,21 @@ class Index {
    *
    * Creates the index from the file passed
    *
-   * @param {string} filePath - Path to the file
+   * @param {string} fileName - Name of the file
    * @param {object} file - Content of the file
    * @returns {object} An object of created indices
    */
-  createIndex(filePath, file) {
-    file = this.checkJSON(file);
+  createIndex(fileName, file) {
+    file = Index.checkJSON(file);
     if (!file) {
       return false;
     }
     const fileWords = [];
     const wordsIndex = {};
-    for (const doc of file) {
+    file.forEach((doc) => {
       const fileString = (`${doc.title} ${doc.text}`).toLowerCase();
-      fileWords.push(this.tidyText(fileString));
-    }
+      fileWords.push(Index.tidyText(fileString));
+    });
     for (const indexNo in fileWords) {
       const position = parseInt(indexNo, 10);
       fileWords[indexNo].forEach((word) => {
@@ -79,28 +80,11 @@ class Index {
         }
       });
     }
-    if (!this.index[filePath]) {
-      this.index[filePath] = wordsIndex;
+    if (!this.index[fileName]) {
+      this.index[fileName] = wordsIndex;
     }
-    this.files[filePath] = file.length;
+    this.files[fileName] = file.length;
     return this.index;
-  }
-
-  /**
-   * getFiles
-   *
-   * Returns the available files
-   *
-   * @param {string} filePath - Path to the file
-   * @returns {object} An object of available files
-   */
-  getFiles(filePath) {
-    if (Object.keys(this.files).length === 0) {
-      return false;
-    } else if (typeof filePath !== 'string') {
-      return this.files;
-    }
-    return this.files[filePath];
   }
 
   /**
@@ -108,26 +92,29 @@ class Index {
    *
    * Returns the index
    *
-   * @param {string} filePath - Path to the file
+   * @param {string} fileName - Name to the file
    * @returns {object} An object of indices
    */
-  getIndex(filePath) {
-    return this.index[filePath];
+  getIndex(fileName) {
+    return this.index[fileName];
   }
 
-   //* searchWords
-   //* Gets the search words passed, refactors them for searching
-   //* @params {string} terms
-   //* @returns {string} A string of words to search
-  searchWords(terms) {
+  /**
+   * searchIndex
+   * Search for terms in a file
+   * @param {String} terms word(s) to be searched in the index
+   * @param {String} filename file to search for words
+   * @return {Object} words and their index
+   */
+  static searchWords(...terms) {
     let toSearch = '';
-    for (let word = 0; word < arguments.length; word += 1) {
+
+    for (let word = 0; word < terms.length; word += 1) {
       if (Array.isArray(...[word])) {
-        arguments[word].join(' ');
+        terms[word].join(' ');
       }
-      toSearch += `${arguments[word]} `;
+      toSearch += `${terms[word]} `;
     }
-    this.toSearch = toSearch;
     return toSearch.split(',').join(' ');
   }
 
@@ -136,22 +123,29 @@ class Index {
    *
    * Checks whether searched terms are in the created index
    *
-   * @param {string} filePath
+   * @param {string} fileName
    * @param {string} terms
    * @returns {object} An object of the results
    */
-  searchIndex(filePath, ...terms) {
+  searchIndex(fileName, ...terms) {
     const results = {};
     let searchTerms = [];
-    const toSearch = this.searchWords(...terms);
-    searchTerms = this.tidyText(toSearch.toLowerCase());
-    if (!filePath) {
-      for (const file in this.index) {
-        results[file] = this.searchResult(searchTerms, this.index[file]);
-      }
+    const pass = new Date();
+    const now = pass.getTime() / 1000;
+    const toSearch = Index.searchWords(...terms);
+
+    searchTerms = Index.tidyText(toSearch.toLowerCase());
+    if (!fileName) {
+      Array.prototype.forEach.call(this.index, (file) => {
+        results[file] = Index.searchResult(searchTerms, this.index[file]);
+      });
     } else {
-      const searchFile = this.index[filePath];
-      results[filePath] = this.searchResult(searchTerms, searchFile);
+      const searchFile = this.index[fileName];
+      results[fileName] = Index.searchResult(searchTerms, searchFile);
+    }
+
+    if (((pass.getTime() / 1000) - now) > 0) {
+      throw new Error('Search took too long.');
     }
     return results;
   }
@@ -165,7 +159,7 @@ class Index {
    * @param {object} file
    * @returns {object} results
    */
-  searchResult(searchTerms, file) {
+  static searchResult(searchTerms, file) {
     const results = {};
 
     searchTerms.forEach((term, index) => {
@@ -173,7 +167,6 @@ class Index {
         results[searchTerms[index]] = file[term];
       }
     });
-    this.results = results;
     return results;
   }
 }
