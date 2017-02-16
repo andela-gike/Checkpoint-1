@@ -70,7 +70,7 @@ class Index {
       fileWords.push(Index.tidyText(fileString));
     });
 
-    Array.prototype.forEach.call(fileWords, (indexNo) => {
+    for (const indexNo in fileWords) {
       const position = parseInt(indexNo, 10);
       fileWords[indexNo].forEach((word) => {
         if (wordsIndex[word]) {
@@ -81,7 +81,7 @@ class Index {
           wordsIndex[word] = [position];
         }
       });
-    });
+    }
     if (!this.index[fileName]) {
       this.index[fileName] = wordsIndex;
     }
