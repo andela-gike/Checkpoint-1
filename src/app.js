@@ -18,6 +18,7 @@ app.controller('MainController', ['$scope', ($scope) => {
 
   $scope.uploadedFile = (file) => {
     if (!/\.json$/g.test(file.name.toString())) {
+
       modalMessage('Upload a valid JSON file');
     }
     const reader = new FileReader();
