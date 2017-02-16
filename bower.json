@@ -1,0 +1,23 @@
+{
+  "name": "Grace Ike",
+  "description": "An Inverted index application for searching files",
+  "main": "inverted-index.js",
+  "authors": [
+    "Ike Grace"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "inverted-index"
+  ],
+  "homepage": "https://github.com/andela-gike/Checkpoint-1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  }
+}

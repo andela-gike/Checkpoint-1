@@ -9,29 +9,46 @@
   },
   "dependencies": {
     "browser-sync": "^2.18.7",
-    "coveralls": "^2.11.15",
+    "browserify": "^14.0.0",
+    "codeclimate-test-reporter": "^0.4.0",
     "eslint": "^3.14.0",
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-cli": "^1.2.2",
     "gulp-eslint": "^3.0.1",
     "gulp-jasmine": "^2.4.2",
     "gulp-jasmine-browser": "^1.7.1",
     "gulp-livereload": "^3.8.1",
+    "gulp-run": "^1.7.1",
     "gulp-watch": "^4.3.11",
     "jasmine-core": "^2.5.2",
     "jasmine-node": "^1.14.5",
-    "request": "^2.79.0"
+    "karma": "^1.4.1",
+    "karma-coverage": "^1.1.1",
+    "karma-spec-as-html-reporter": "0.0.3",
+    "karma-spec-reporter": "0.0.26",
+    "karma-verbose-reporter": "0.0.5",
+    "request": "^2.79.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "async": "^2.1.4",
+    "eslint-plugin-promise": "^3.4.1",
     "gulp-coverage": "^0.3.38",
-    "gulp-istanbul": "^1.1.1"
+    "gulp-istanbul": "^1.1.1",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-verbose-reporter": "0.0.5"
   },
   "scripts": {
     "start": "gulp",
-    "test": "./node_modules/.bin/jasmine-node jasmine/spec/inverted-index-test.js"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
