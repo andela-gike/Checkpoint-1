@@ -69,19 +69,23 @@ app.controller('MainController', ['$scope', ($scope) => {
     $scope.results = [];
     $scope.searchTable = false;
     if (!fileSearch) {
-      modalMessage('No file selected, please select the file(s) you want to search');
+      modalMessage(`No file selected, please select the file(s)
+       you want to search`);
     } else if (searchValue === '' || searchValue === undefined) {
-      modalMessage('Search field cannot be blank, please write the word(s) you want to find.');
+      modalMessage(`Search field cannot be blank,
+      please write the word(s) you want to find.`);
     } else if (Object.keys($scope.indexFile).length === 0) {
       modalMessage('Create an index first, before you can search.');
     }
     if (fileSearch === 'all') {
       Object.keys($scope.uploadFile).forEach((file) => {
-        $scope.result = $scope.indexInstance.searchIndex(file, searchValue);
+        $scope.result = $scope.indexInstance
+        .searchIndex(file, searchValue);
         $scope.results.push($scope.result);
       });
     } else {
-      $scope.result = $scope.indexInstance.searchIndex(fileSearch, searchValue);
+      $scope.result = $scope.indexInstance
+      .searchIndex(fileSearch, searchValue);
       $scope.results.push($scope.result);
     }
     $scope.results.forEach((result) => {

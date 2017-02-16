@@ -161,20 +161,6 @@ describe('Inverted Index Test Suite', () => {
         index.searchIndex('alice', 'fellowship');
       }).not.toThrowError('Search took too long.');
     });
-
-    // it('find terms in all files  when required', () => {
-    //   expect(invertIndex.searchIndex('all', 'the', 'wonderland')).toEqual([{
-    //     books: {
-    //       'wonderland': [0],
-    //       'the': [1]
-    //     }
-    //   }, {
-    //     music: {
-    //       'wonderland': [],
-    //       'the': [0, 1]
-    //     }
-    //   }]);
-    // });
   });
 });
 
