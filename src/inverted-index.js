@@ -24,6 +24,7 @@ class Index {
    * @returns {bool} | {object} A false boolean if file is not valid
    * or a JSON object if valid file
    */
+
   static checkJSON(responseFile) {
     if (responseFile.length > 0
       && responseFile[0].title && responseFile[0].text) {
