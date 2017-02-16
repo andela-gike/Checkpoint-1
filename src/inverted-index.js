@@ -22,9 +22,9 @@ class Index {
    *
    * @param {object} responseFile - Content of the file
    * @returns {bool} | {object} A false boolean if file is not valid
+   *
    * or a JSON object if valid file
    */
-
   static checkJSON(responseFile) {
     if (responseFile.length > 0
       && responseFile[0].title && responseFile[0].text) {
@@ -62,13 +62,15 @@ class Index {
     if (!file) {
       return false;
     }
+
     const fileWords = [];
     const wordsIndex = {};
-    file.forEach((doc) => {
-      const fileString = (`${doc.title} ${doc.text}`).toLowerCase();
+    file.forEach((document) => {
+      const fileString = (document.text).toLowerCase();
       fileWords.push(Index.tidyText(fileString));
     });
-    for (const indexNo in fileWords) {
+
+    Array.prototype.forEach.call(fileWords, (indexNo) => {
       const position = parseInt(indexNo, 10);
       fileWords[indexNo].forEach((word) => {
         if (wordsIndex[word]) {
@@ -79,7 +81,7 @@ class Index {
           wordsIndex[word] = [position];
         }
       });
-    }
+    });
     if (!this.index[fileName]) {
       this.index[fileName] = wordsIndex;
     }
