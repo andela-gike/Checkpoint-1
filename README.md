@@ -35,5 +35,5 @@ Run the `SpecRunner.html` in the base dir
 
 MIT License
 
-Copyright (c) 2016 GRACE IKE
+Copyright (c) 2017 GRACE IKE
 

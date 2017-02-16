@@ -59,18 +59,22 @@ describe('Inverted Index Test Suite', () => {
   describe('Read book data', () => {
     it('should ensure that JSON file is not empty', () => {
       expect(goodJSON.length > 0).toBeTruthy();
+      expect(invalid.length > 0).not.toBeTruthy();
     });
 
     it('reads valid and populated JSON files', () => {
       expect(Index.checkJSON(goodJSON)).toBeTruthy();
+      expect(Index.checkJSON(badJSON)).not.toBeTruthy();
     });
 
     it('rejects an invalid file', () => {
       expect(index.createIndex('invalid', invalid)).toBeFalsy();
     });
 
-    it('asserts that JSON files have title-text pairs as object keys', () => {
+    it(`asserts that JSON files have title-text
+      pairs as object keys`, () => {
       expect(index.createIndex('badJSON', badJSON)).toBeFalsy();
+      expect(index.createIndex('goodJSON', goodJSON)).toBeTruthy();
     });
   });
 
@@ -80,6 +84,20 @@ describe('Inverted Index Test Suite', () => {
   describe('Populate Index', () => {
     it('reads file when an index is created', () => {
       expect(index.getIndex('goodJSON').length).not.toEqual(0);
+    });
+  });
+
+  /**
+   * Test suite to ensure the getIndex method returns an object of
+   * the correct index mapping
+   */
+  describe('Get index', () => {
+    it(`should verify that the correct object
+      of index map is returned`, () => {
+      expect(index.getIndex('goodJSON').and).toEqual([0, 1]);
+      expect(index.getIndex('goodJSON')).not.toBe(null);
+      expect(typeof index.getIndex('goodJSON')).toBe('object');
+      expect(!Array.isArray(index.getIndex('goodJSON'))).toBeTruthy();
     });
   });
 
@@ -100,11 +118,12 @@ describe('Inverted Index Test Suite', () => {
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice &&
-      searchResults.goodJSON.rings).toEqual([0] && [1]);
+        searchResults.goodJSON.rings).toEqual([0] && [1]);
     });
 
     it('should successfully searches an array of words', () => {
-      searchResults = index.searchIndex('goodJSON', '[dwarf elf]');
+      searchResults = index
+        .searchIndex('goodJSON', '[dwarf elf]');
       expect(searchResults).toEqual({
         goodJSON: {
           dwarf: [1],
@@ -113,20 +132,9 @@ describe('Inverted Index Test Suite', () => {
       });
     });
 
-    // it('searches all file when a file name is not specified', () => {
-    //   searchResults = index.searchIndex(null, 'lord of the rings');
-    //   expect(searchResults).toEqual({
-    //     goodJSON: {
-    //       lord: [1],
-    //       of: [0, 1],
-    //       the: [1],
-    //       rings: [1]
-    //     }
-    //   });
-    // });
-
     it('searches for terms with non-word characters', () => {
-      searchResults = index.searchIndex('goodJSON', 'The. ^###*% Fellowship, of:');
+      searchResults = index.searchIndex('goodJSON',
+        'The. ^###*% Fellowship, of:');
       expect(searchResults).toEqual({
         goodJSON: {
           the: [1],
@@ -145,13 +153,28 @@ describe('Inverted Index Test Suite', () => {
 
     it('returns nothing if no terms are passed', () => {
       searchResults = index.searchIndex('');
-      expect(searchResults).toEqual({ });
+      expect(searchResults).toEqual({});
     });
 
     it('should not take long to execute.', () => {
-      expect(() => { index.searchIndex('alice', 'fellowship'); }).not
-      .toThrowError('Search took too long.');
+      expect(() => {
+        index.searchIndex('alice', 'fellowship');
+      }).not.toThrowError('Search took too long.');
     });
+
+    // it('find terms in all files  when required', () => {
+    //   expect(invertIndex.searchIndex('all', 'the', 'wonderland')).toEqual([{
+    //     books: {
+    //       'wonderland': [0],
+    //       'the': [1]
+    //     }
+    //   }, {
+    //     music: {
+    //       'wonderland': [],
+    //       'the': [0, 1]
+    //     }
+    //   }]);
+    // });
   });
 });
 

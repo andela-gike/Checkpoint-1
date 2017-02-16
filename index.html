@@ -32,11 +32,11 @@
         </div>
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Inverted Index</a>
+            <a class="navbar-brand" href="#" style="color: white">Inverted Index</a>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <p class="navbar-text navbar-right">
-              <a href="https://github.com/andela-gike/Checkpoint-1" class="navbar-link">Follow on Github</a></p>
+              <a href="https://github.com/andela-gike/Checkpoint-1" class="navbar-link" style="color: white">Follow on Github</a></p>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
               <!--upload class-->
               <div class="container" style="background-color:azure;">
                 <div class="row">
-                  <div class="col-md-3" style="background-color:azure;">
+                  <div class="col-md-3">
                     <p>
                     </p>
                     <h3> About this Application </h3>
@@ -104,8 +104,8 @@
                         <p>Choose a file to index:</p>
                         <select id="fileNames" ng-model="addFile">
                         <option value="nofile" disabled selected> Choose a file to index</option>
+                        <option value="all" ng-model="addFile"  ng-if="keys(uploadFile).length > 1"> All files</option>
                         <option ng-model="addFile" ng-repeat="(file, content) in uploadFile" value="{{file}}">{{file}}</option>
-                      <option value="all" ng-model="addFile"  ng-if="keys(uploadFile).length > 1"> All files</option>
                         </select>
                       </div>
                       <br/>
@@ -118,7 +118,7 @@
                           <i class="fa fa-close" style="color:red"></i> : Absent
                           from entry </p><br/><br/>
                         <p class="tbl-intro" ng-if="indexReveal">Index created for {{ file.name }}</p>
-                        <table class="table table-hover table-responsive">
+                        <table class="table table-hover table-responsive table-bordered">
                           <thead>
                             <th>Word</th>
                             <th ng-repeat="number in arrayCount(keys(file).length) track by $index" style="text-align: center;">
@@ -150,7 +150,7 @@
                             <div class="input-append span12">
                               <input type="text" class="search-query" id="search-terms" ng-model="searchWord" placeholder="Search"
                                 required>
-                                <button type="submit" class="btn" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true" ng-click="searchIndex()"></span></i></button>
+                                <button type="submit" class="btn btn default" id="search-button" ng-click="searchIndex()"><span class="glyphicon glyphicon-search" aria-hidden="true" ng-click="searchIndex()"></span></i></button>
                                 <br/>
                             </div>
                           </form>
@@ -159,8 +159,8 @@
                             <p>Choose a file to search:</p>
                             <select id="fileNames" ng-model="searchedFile">
                           <option value="nofile" disabled selected> Choose a file to search </option>
+                          <option value="all" ng-model="searchedFile"  ng-if="keys(indexFile).length > 1"> All files</option>
                             <option ng-model="searchedFile" ng-repeat="(file, content) in indexFile" value="{{file}}">{{file}}</option>
-                            <option value="all" ng-model="searchedFile"  ng-if="keys(indexFile).length > 1"> All files</option>
                               </select>
                           </div>
                         </div>
@@ -172,7 +172,7 @@
                           <i class="fa fa-close" style="color:red"></i> : Absent
                           from entry </p><br/><br/>
                         <p class="tbl-intro" ng-model="searchWord" ng-if="searchTable">Showing search results for {{searchWord}} in {{file.name}}</p>
-                        <table class="table table-hover table-responsive">
+                        <table class="table table-hover table-responsive table-bordered">
                           <thead>
                             <tr>
                               <th>Word</th>

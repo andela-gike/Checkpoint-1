@@ -25,7 +25,8 @@ class Index {
    * or a JSON object if valid file
    */
   static checkJSON(responseFile) {
-    if (responseFile[0] && responseFile[0].title) {
+    if (responseFile.length > 0
+      && responseFile[0].title && responseFile[0].text) {
       return responseFile;
     }
     return false;
@@ -51,11 +52,11 @@ class Index {
    *
    * Creates the index from the file passed
    *
-   * @param {string} filePath - Path to the file
+   * @param {string} fileName - Name of the file
    * @param {object} file - Content of the file
    * @returns {object} An object of created indices
    */
-  createIndex(filePath, file) {
+  createIndex(fileName, file) {
     file = Index.checkJSON(file);
     if (!file) {
       return false;
@@ -78,10 +79,10 @@ class Index {
         }
       });
     }
-    if (!this.index[filePath]) {
-      this.index[filePath] = wordsIndex;
+    if (!this.index[fileName]) {
+      this.index[fileName] = wordsIndex;
     }
-    this.files[filePath] = file.length;
+    this.files[fileName] = file.length;
     return this.index;
   }
 
@@ -104,14 +105,14 @@ class Index {
    * @param {String} filename file to search for words
    * @return {Object} words and their index
    */
-  static searchWords(terms) {
+  static searchWords(...terms) {
     let toSearch = '';
 
-    for (let word = 0; word < arguments.length; word += 1) {
+    for (let word = 0; word < terms.length; word += 1) {
       if (Array.isArray(...[word])) {
-        arguments[word].join(' ');
+        terms[word].join(' ');
       }
-      toSearch += `${arguments[word]} `;
+      toSearch += `${terms[word]} `;
     }
     return toSearch.split(',').join(' ');
   }

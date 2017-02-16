@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const jasmineBrowser = require('gulp-jasmine-browser');
 const browserify = require('browserify');
 const browserSync = require('browser-sync').create();
+const browserSpec = require('browser-sync').create();
 const source = require('vinyl-source-stream');
 
 
@@ -36,9 +37,22 @@ gulp.task('jasmine', () => {
   gulp.src(['src/inverted-index.js', 'jasmine/spec/inverted-index-test.js'])
     .pipe(jasmineBrowser.specRunner())
     .pipe(jasmineBrowser.server({
-      port: 8888
+      port: 8881
     }));
 });
+
+gulp.task('browserSpec', () => {
+  browserSync.init({
+    server: {
+      baseDir: ['src/js', 'jasmine/spec/test'],
+      index: 'SpecRunner.html'
+    },
+    port: 8888,
+    ui: false,
+    ghostMode: false
+  });
+});
+
 
 gulp.task('browserify', () =>
    browserify('jasmine/spec/inverted-index-test.js')
