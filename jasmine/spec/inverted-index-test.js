@@ -6,7 +6,7 @@ const invalid = require('../empty.json');
 
 
 describe('Inverted Index Test Suite', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     index = new Index();
     index.createIndex('goodJSON', goodJSON);
     index.createIndex('invalid', invalid);

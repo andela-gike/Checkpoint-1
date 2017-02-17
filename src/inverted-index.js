@@ -38,14 +38,25 @@ class Index {
    *
    * Removes punctuation and whitespace
    *
-   * @param {string} words - Words in file
+   * @param {string} values - Words in file as a value
    * @returns {array} An array of words with no whitespace or punctuation
    */
-  static tidyText(words) {
-    return words.replace(/\W+/g, ' ')
-      .trim().split(' ').filter(text =>
-        text
-      );
+  static tidyText(values) {
+    const words = values.toLowerCase().replace(/\W+/g, ' ')
+      .trim().split(' ');
+    return this.arrangeWords(words);
+  }
+
+  /**
+   * arrangeWords
+   *
+   * bring out an array the contain properly arranged words
+   * @param {array} words words in each file
+   * @returns {array} returns an array of distinct words
+   *
+   */
+  static arrangeWords(words) {
+    return words.filter((item, position) => words.indexOf(item) === position);
   }
 
   /**
@@ -63,25 +74,17 @@ class Index {
       return false;
     }
 
-    const fileWords = [];
     const wordsIndex = {};
-    file.forEach((document) => {
-      const fileString = (document.text).toLowerCase();
-      fileWords.push(Index.tidyText(fileString));
-    });
-
-    for (const indexNo in fileWords) {
-      const position = parseInt(indexNo, 10);
-      fileWords[indexNo].forEach((word) => {
+    file.forEach((document, index) => {
+      const fileString = Index.tidyText(document.text);
+      fileString.forEach((word) => {
         if (wordsIndex[word]) {
-          if (wordsIndex[word].indexOf(position) === -1) {
-            wordsIndex[word].push(position);
-          }
+          wordsIndex[word].push(index);
         } else {
-          wordsIndex[word] = [position];
+          wordsIndex[word] = [index];
         }
       });
-    }
+    });
     if (!this.index[fileName]) {
       this.index[fileName] = wordsIndex;
     }

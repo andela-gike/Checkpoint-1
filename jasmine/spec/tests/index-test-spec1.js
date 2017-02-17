@@ -28,13 +28,15 @@ module.exports=[
 ]
 
 },{}],4:[function(require,module,exports){
+
 let index;
 const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
 
+
 describe('Inverted Index Test Suite', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     index = new Index();
     index.createIndex('goodJSON', goodJSON);
     index.createIndex('invalid', invalid);
@@ -44,7 +46,6 @@ describe('Inverted Index Test Suite', () => {
   /**
    * Index instance test suit
    */
-
   describe('If instantiated', () => {
     it('should be an instance of the Index class', () => {
       expect(index instanceof Index).toBeTruthy();
