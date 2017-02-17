@@ -12,9 +12,6 @@ engines:
     channel: "eslint-2"
   fixme:
     enabled: true
-  checks:
-    newline-per-chained-call:
-      enabled: false
 ratings:
   paths:
   - "**.css"
