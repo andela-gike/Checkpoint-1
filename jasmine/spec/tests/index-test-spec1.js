@@ -33,10 +33,6 @@ const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
 
-const multipleSearch = 'Destroy world imagination quickly.';
-const searchArray = ['forever', 'wizard and hobbit seek to destroy.'];
-
-
 describe('Inverted Index Test Suite', () => {
   beforeAll(() => {
     index = new Index();
