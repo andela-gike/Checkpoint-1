@@ -47,6 +47,10 @@ describe('Inverted Index Test Suite', () => {
   describe('If instantiated', () => {
     it('should be an instance of the Index class', () => {
       expect(index instanceof Index).toBeTruthy();
+      expect(index instanceof Object).toBeTruthy();
+      expect(index instanceof Object).not.toBeFalsy();
+      expect(typeof (index)).toBe('object');
+      expect(typeof (index)).not.toBe('string');
     });
   });
 
@@ -83,6 +87,13 @@ describe('Inverted Index Test Suite', () => {
   describe('Populate Index', () => {
     it('reads file when an index is created', () => {
       expect(index.getIndex('goodJSON').length).not.toEqual(0);
+    });
+
+    it('should map words to document location accurately', () => {
+      expect(index.index.goodJSON.and).toEqual([0, 1]);
+      expect(index.index.goodJSON.into).toEqual([0]);
+      expect(index.index.goodJSON.powerful).not.toBe([0]);
+      expect(index.index.goodJSON.rabbit).not.toBe([1]);
     });
   });
 

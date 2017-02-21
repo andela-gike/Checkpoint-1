@@ -152,7 +152,7 @@ class Index {
     }
 
     if (((pass.getTime() / 1000) - now) > 0) {
-      throw new Error('Search took too long.');
+      throw Error('Search took too long.');
     }
     return results;
   }
