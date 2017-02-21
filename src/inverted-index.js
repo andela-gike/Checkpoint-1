@@ -42,8 +42,10 @@ class Index {
    * @returns {array} An array of words with no whitespace or punctuation
    */
   static tidyText(values) {
-    const words = values.toLowerCase().replace(/\W+/g, ' ')
-      .trim().split(' ');
+    const words = values.toLowerCase()
+      .replace(/\W+/g, ' ')
+      .trim()
+      .split(' ');
     return this.arrangeWords(words);
   }
 
