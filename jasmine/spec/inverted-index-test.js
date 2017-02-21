@@ -1,8 +1,10 @@
-
 let index;
 const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
+
+const multipleSearch = 'Destroy world imagination quickly.';
+const searchArray = ['forever', 'wizard and hobbit seek to destroy.'];
 
 
 describe('Inverted Index Test Suite', () => {
@@ -85,31 +87,31 @@ describe('Inverted Index Test Suite', () => {
     });
 
     it('should ensure it does a multi-word search', () => {
-      searchResults = index.searchIndex('goodJSON', 'alice rings ');
+      searchResults = index.searchIndex('goodJSON', 'alice ring ');
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice &&
-        searchResults.goodJSON.rings).toEqual([0] && [1]);
+        searchResults.goodJSON.ring).toEqual([0] && [1]);
     });
 
-    it('should successfully searches an array of words', () => {
-      searchResults = index
-        .searchIndex('goodJSON', '[dwarf elf]');
-      expect(searchResults).toEqual({
+    it('ensure searchIndex can handle complex data types', () => {
+      expect(index.searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
         goodJSON: {
+          a: [0, 1],
           dwarf: [1],
-          elf: [1]
+          elf: [1],
+          and: [0, 1]
         }
       });
     });
 
     it('searches for terms with non-word characters', () => {
       searchResults = index.searchIndex('goodJSON',
-        'The. ^###*% Fellowship, of:');
+        'dwarf. ^###*% wizard, of:');
       expect(searchResults).toEqual({
         goodJSON: {
-          the: [1],
-          fellowship: [1],
+          dwarf: [1],
+          wizard: [1],
           of: [0, 1]
         }
       });
