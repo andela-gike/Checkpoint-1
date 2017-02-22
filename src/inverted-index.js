@@ -54,7 +54,7 @@ class Index {
    *
    * bring out an array the contain properly arranged words
    * @param {array} words words in each file
-   * @returns {array} returns an array of distinct words
+   * @returns {array} returns an array of arranged words
    *
    */
   static arrangeWords(words) {
