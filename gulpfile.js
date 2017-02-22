@@ -37,15 +37,15 @@ gulp.task('jasmine', () => {
   gulp.src(['src/inverted-index.js', 'jasmine/spec/inverted-index-test.js'])
     .pipe(jasmineBrowser.specRunner())
     .pipe(jasmineBrowser.server({
-      port: 8881
+      port: 8880
     }));
 });
 
 gulp.task('browserSpec', () => {
   browserSync.init({
     server: {
-      baseDir: ['src/js', 'jasmine/spec/test'],
-      index: 'SpecRunner.html'
+      baseDir: ['./'],
+      index: 'spec.html'
     },
     port: 8888,
     ui: false,

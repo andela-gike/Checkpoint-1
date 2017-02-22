@@ -5,9 +5,8 @@ const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
 
-
 describe('Inverted Index Test Suite', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     index = new Index();
     index.createIndex('goodJSON', goodJSON);
     index.createIndex('invalid', invalid);
@@ -20,6 +19,10 @@ describe('Inverted Index Test Suite', () => {
   describe('If instantiated', () => {
     it('should be an instance of the Index class', () => {
       expect(index instanceof Index).toBeTruthy();
+      expect(index instanceof Object).toBeTruthy();
+      expect(index instanceof Object).not.toBeFalsy();
+      expect(typeof (index)).toBe('object');
+      expect(typeof (index)).not.toBe('string');
     });
   });
 
@@ -57,6 +60,13 @@ describe('Inverted Index Test Suite', () => {
     it('reads file when an index is created', () => {
       expect(index.getIndex('goodJSON').length).not.toEqual(0);
     });
+
+    it('should map words to document location accurately', () => {
+      expect(index.index.goodJSON.and).toEqual([0, 1]);
+      expect(index.index.goodJSON.into).toEqual([0]);
+      expect(index.index.goodJSON.powerful).not.toBe([0]);
+      expect(index.index.goodJSON.rabbit).not.toBe([1]);
+    });
   });
 
   /**
@@ -86,31 +96,31 @@ describe('Inverted Index Test Suite', () => {
     });
 
     it('should ensure it does a multi-word search', () => {
-      searchResults = index.searchIndex('goodJSON', 'alice rings ');
+      searchResults = index.searchIndex('goodJSON', 'alice ring ');
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice &&
-        searchResults.goodJSON.rings).toEqual([0] && [1]);
+        searchResults.goodJSON.ring).toEqual([0] && [1]);
     });
 
-    it('should successfully searches an array of words', () => {
-      searchResults = index
-        .searchIndex('goodJSON', '[dwarf elf]');
-      expect(searchResults).toEqual({
+    it('ensure searchIndex can handle complex data types', () => {
+      expect(index.searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
         goodJSON: {
+          a: [0, 1],
           dwarf: [1],
-          elf: [1]
+          elf: [1],
+          and: [0, 1]
         }
       });
     });
 
     it('searches for terms with non-word characters', () => {
       searchResults = index.searchIndex('goodJSON',
-        'The. ^###*% Fellowship, of:');
+        'dwarf. ^###*% wizard, of:');
       expect(searchResults).toEqual({
         goodJSON: {
-          the: [1],
-          fellowship: [1],
+          dwarf: [1],
+          wizard: [1],
           of: [0, 1]
         }
       });

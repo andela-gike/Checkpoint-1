@@ -12,6 +12,11 @@ module.exports = (config) => {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
+    plugin: [
+      'karma-coverage',
+      'karma-coveralls'
+    ],
+
 
     // list of files / patterns to load in the browser
     files: [
@@ -28,6 +33,7 @@ module.exports = (config) => {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/inverted-index.js': ['coverage']
     },
 
 
@@ -37,8 +43,14 @@ module.exports = (config) => {
     reporters: ['progress',
       'verbose',
       'coverage',
+      'coveralls',
       'spec-as-html'
     ],
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/'
+    },
 
 
     // web server port

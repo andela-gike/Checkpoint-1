@@ -23,3 +23,4 @@ exclude_paths:
 - "jasmine/lib/jasmine-2.3.4/jasmine.js"
 - "jasmine/lib/jasmine-2.3.4/jasmine-html.js"
 - "src/app.js"
+- "jasmine/spec/tests/index-test-spec1.js"

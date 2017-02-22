@@ -2,3 +2,4 @@
 node_modules
 jasmine/lib/jasmine-2.3.4/*.js
 jasmine/spec/tests/*.js
+coverage/

@@ -11,24 +11,28 @@ app.controller('MainController', ['$scope', ($scope) => {
 
   $scope.arrayCount = number => new Array(number);
 
-  const modalMessage = (msg) => {
-    $scope.message = msg;
+  const modalMessage = (message) => {
+    $scope.message = message;
     $('.modal').modal();
   };
 
   $scope.uploadedFile = (file) => {
     if (!/\.json$/g.test(file.name.toString())) {
-
       modalMessage('Upload a valid JSON file');
     }
+
     const reader = new FileReader();
     let fileContent;
     reader.readAsText(file);
     reader.onload = (e) => {
       fileContent = JSON.parse(e.target.result);
-      if (fileContent !== false) {
+      const checkJSON = fileContent.length > 0
+        && fileContent[0].title && fileContent[0].text;
+      if ((fileContent && checkJSON) !== false) {
         $scope.uploadFile[file.name] = fileContent;
         $scope.$apply();
+      } else {
+        modalMessage('The file uploaded is not valid');
       }
     };
   };
@@ -39,6 +43,7 @@ app.controller('MainController', ['$scope', ($scope) => {
     if (!addFile) {
       modalMessage('No file selected');
     }
+
     if (addFile === 'all') {
       Object.keys($scope.uploadFile).forEach((file) => {
         $scope.indices = $scope.indexInstance
@@ -52,11 +57,12 @@ app.controller('MainController', ['$scope', ($scope) => {
         modalMessage('Invalid file type');
       }
     }
-    $scope.newIndex.forEach((obj) => {
-      for (const item in obj) {
+
+    $scope.newIndex.forEach((indexObject) => {
+      for (const item in indexObject) {
         $scope.indexFile[item] = {
           name: item,
-          index: obj[item]
+          index: indexObject[item]
         };
       }
     });
@@ -79,14 +85,12 @@ app.controller('MainController', ['$scope', ($scope) => {
       modalMessage('Create an index first, before you can search.');
     }
     if (fileSearch === 'all') {
-      Object.keys($scope.uploadFile).forEach((file) => {
-        $scope.result = $scope.indexInstance
-        .searchIndex(file, searchValue);
+      for (const file of Object.keys($scope.indexFile)) {
+        $scope.result = $scope.indexInstance.searchIndex(file, searchValue);
         $scope.results.push($scope.result);
-      });
+      }
     } else {
-      $scope.result = $scope.indexInstance
-      .searchIndex(fileSearch, searchValue);
+      $scope.result = $scope.indexInstance.searchIndex(fileSearch, searchValue);
       $scope.results.push($scope.result);
     }
     $scope.results.forEach((result) => {
