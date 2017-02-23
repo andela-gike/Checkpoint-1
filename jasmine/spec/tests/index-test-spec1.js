@@ -37,9 +37,6 @@ const invalid = require('../empty.json');
 describe('Inverted Index Test Suite', () => {
   beforeAll(() => {
     index = new Index();
-    index.createIndex('goodJSON', goodJSON);
-    index.createIndex('invalid', invalid);
-    index.createIndex('badJSON', badJSON);
   });
 
   /**
@@ -47,11 +44,9 @@ describe('Inverted Index Test Suite', () => {
    */
   describe('If instantiated', () => {
     it('should be an instance of the Index class', () => {
-      expect(index instanceof Index).toBeTruthy();
       expect(index instanceof Object).toBeTruthy();
       expect(index instanceof Object).not.toBeFalsy();
-      expect(typeof (index)).toBe('object');
-      expect(typeof (index)).not.toBe('string');
+      expect(index instanceof Index).toBeTruthy();
     });
   });
 
@@ -117,23 +112,30 @@ describe('Inverted Index Test Suite', () => {
    */
   describe('Search Index', () => {
     let searchResults;
-    it('does a single-word search', () => {
+    beforeEach(() => {
+      index.createIndex('goodJSON', goodJSON);
+    });
+
+    it(`should return search result if
+    a single word is passed`, () => {
       searchResults = index.searchIndex('goodJSON', 'alice');
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
-      expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice).toEqual([0]);
     });
 
-    it('should ensure it does a multi-word search', () => {
+    it(`should result search result if multi-word
+    is passed as value`, () => {
       searchResults = index.searchIndex('goodJSON', 'alice ring ');
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice &&
-        searchResults.goodJSON.ring).toEqual([0] && [1]);
+        searchResults.goodJSON.ring)
+        .toEqual([0] && [1]);
     });
 
     it('ensure searchIndex can handle complex data types', () => {
-      expect(index.searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
+      expect(index
+      .searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
         goodJSON: {
           a: [0, 1],
           dwarf: [1],
@@ -167,11 +169,12 @@ describe('Inverted Index Test Suite', () => {
       expect(searchResults).toEqual({});
     });
 
-    it('should not take long to execute.', () => {
-      expect(() => {
-        index.searchIndex('alice', 'fellowship');
-      }).not.toThrowError('Search took too long.');
-    });
+    // it('returns search result if no filename is specified', () => {
+    //   expect(index.searchIndex(['of', 'rabbit'], ['goodJSON'])).toEqual({
+    //     key: { rabbit: [] },
+    //     goodJSON: { rabbit: [0] }
+    //   });
+    // });
   });
 });
 
