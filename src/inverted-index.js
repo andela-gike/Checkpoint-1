@@ -38,7 +38,7 @@ class Index {
    *
    * Removes punctuation and whitespace
    *
-   * @param {string} values - Words in file as a value
+   * @param {string} values - String of words in file as a value
    * @returns {array} An array of words with no whitespace or punctuation
    */
   static tidyText(values) {
@@ -90,7 +90,6 @@ class Index {
     if (!this.index[fileName]) {
       this.index[fileName] = wordsIndex;
     }
-    this.files[fileName] = file.length;
     return this.index;
   }
 
@@ -137,8 +136,6 @@ class Index {
   searchIndex(fileName, ...terms) {
     const results = {};
     let searchTerms = [];
-    const pass = new Date();
-    const now = pass.getTime() / 1000;
     const toSearch = Index.searchWords(...terms);
 
     searchTerms = Index.tidyText(toSearch.toLowerCase());
@@ -149,10 +146,6 @@ class Index {
     } else {
       const searchFile = this.index[fileName];
       results[fileName] = Index.searchResult(searchTerms, searchFile);
-    }
-
-    if (((pass.getTime() / 1000) - now) > 0) {
-      throw Error('Search took too long.');
     }
     return results;
   }
