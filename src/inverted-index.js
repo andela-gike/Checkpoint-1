@@ -90,7 +90,6 @@ class Index {
     if (!this.index[fileName]) {
       this.index[fileName] = wordsIndex;
     }
-    this.files[fileName] = file.length;
     return this.index;
   }
 
