@@ -1,8 +1,8 @@
-
 let index;
 const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
+const goodJSON2 = require('../books2.json');
 
 describe('Inverted Index Test Suite', () => {
   beforeAll(() => {
@@ -99,20 +99,20 @@ describe('Inverted Index Test Suite', () => {
       expect(Array.isArray(searchResults.goodJSON)).toBeFalsy();
       expect(typeof searchResults.goodJSON).toEqual('object');
       expect(searchResults.goodJSON.alice &&
-        searchResults.goodJSON.ring)
+          searchResults.goodJSON.ring)
         .toEqual([0] && [1]);
     });
 
     it('ensure searchIndex can handle complex data types', () => {
       expect(index
-      .searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
-        goodJSON: {
-          a: [0, 1],
-          dwarf: [1],
-          elf: [1],
-          and: [0, 1]
-        }
-      });
+        .searchIndex('goodJSON', ['a', 'dwarf', 'elf', 'and'])).toEqual({
+          goodJSON: {
+            a: [0, 1],
+            dwarf: [1],
+            elf: [1],
+            and: [0, 1]
+          }
+        });
     });
 
     it('searches for terms with non-word characters', () => {
@@ -136,14 +136,22 @@ describe('Inverted Index Test Suite', () => {
 
     it('returns nothing if no terms are passed', () => {
       searchResults = index.searchIndex('');
-      expect(searchResults).toEqual({});
+      expect(searchResults).toEqual({
+        goodJSON: {},
+      });
     });
 
-    // it('returns search result if no filename is specified', () => {
-    //   expect(index.searchIndex(['of', 'rabbit'], ['goodJSON'])).toEqual({
-    //     key: { rabbit: [] },
-    //     goodJSON: { rabbit: [0] }
-    //   });
-    // });
+    it(`should return search result when no file
+    name is specified`, () => {
+      searchResults = index.searchIndex(null, 'a dwarf elf and');
+      expect(searchResults).toEqual({
+        goodJSON: {
+          a: [0, 1],
+          dwarf: [1],
+          elf: [1],
+          and: [0, 1]
+        }
+      });
+    });
   });
 });

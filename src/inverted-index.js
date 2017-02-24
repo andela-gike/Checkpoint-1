@@ -137,12 +137,12 @@ class Index {
     const results = {};
     let searchTerms = [];
     const toSearch = Index.searchWords(...terms);
-
     searchTerms = Index.tidyText(toSearch.toLowerCase());
+
     if (!fileName) {
-      Array.prototype.forEach.call(this.index, (file) => {
+      for (const file in this.index) {
         results[file] = Index.searchResult(searchTerms, this.index[file]);
-      });
+      }
     } else {
       const searchFile = this.index[fileName];
       results[fileName] = Index.searchResult(searchTerms, searchFile);
@@ -161,7 +161,7 @@ class Index {
    */
   static searchResult(searchTerms, file) {
     const results = {};
-
+    console.log('search', searchTerms);
     searchTerms.forEach((term, index) => {
       if (file[term]) {
         results[searchTerms[index]] = file[term];
