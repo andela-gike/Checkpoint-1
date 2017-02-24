@@ -161,7 +161,6 @@ class Index {
    */
   static searchResult(searchTerms, file) {
     const results = {};
-    console.log('search', searchTerms);
     searchTerms.forEach((term, index) => {
       if (file[term]) {
         results[searchTerms[index]] = file[term];
