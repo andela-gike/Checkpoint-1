@@ -140,9 +140,9 @@ class Index {
     searchTerms = Index.tidyText(toSearch.toLowerCase());
 
     if (!fileName) {
-      for (const file in this.index) {
+      Array.prototype.forEach.call(this.index, (file) => {
         results[file] = Index.searchResult(searchTerms, this.index[file]);
-      }
+      });
     } else {
       const searchFile = this.index[fileName];
       results[fileName] = Index.searchResult(searchTerms, searchFile);
