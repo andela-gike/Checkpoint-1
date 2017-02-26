@@ -121,7 +121,7 @@ class Index {
       }
       toSearch += `${terms[word]} `;
     }
-    return toSearch.split(',').join(' ');
+    return toSearch;
   }
 
   /**
