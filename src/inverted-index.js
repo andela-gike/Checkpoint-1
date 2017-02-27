@@ -141,7 +141,6 @@ class Index {
 
     if (!fileName) {
       Object.keys(this.index).forEach((file) => {
-        // for (const file in this.index) {
         results[file] = Index.searchResult(searchTerms, this.index[file]);
       });
     } else {
