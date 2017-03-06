@@ -58,7 +58,8 @@ class Index {
    *
    */
   static arrangeWords(words) {
-    return words.filter((item, position) => words.indexOf(item) === position);
+    return words.filter((item, position) => words
+      .indexOf(item) === position);
   }
 
   /**
@@ -141,11 +142,13 @@ class Index {
 
     if (!fileName) {
       Object.keys(this.index).forEach((file) => {
-        results[file] = Index.searchResult(searchTerms, this.index[file]);
+        results[file] = Index.searchResult(searchTerms,
+          this.index[file]);
       });
     } else {
       const searchFile = this.index[fileName];
-      results[fileName] = Index.searchResult(searchTerms, searchFile);
+      results[fileName] = Index.searchResult(searchTerms,
+        searchFile);
     }
     return results;
   }

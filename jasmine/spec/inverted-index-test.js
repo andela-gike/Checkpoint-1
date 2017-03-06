@@ -3,7 +3,6 @@ let index;
 const goodJSON = require('../books.json');
 const badJSON = require('../sample.json');
 const invalid = require('../empty.json');
-const goodJSON2 = require('../books2.json');
 
 describe('Inverted Index Test Suite', () => {
   beforeAll(() => {
