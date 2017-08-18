@@ -13,28 +13,40 @@ app.controller('MainController', ['$scope', ($scope) => {
 
   const modalMessage = (message) => {
     $scope.message = message;
-    $('.modal').modal();
+    console.log(message);
+    $(document).ready(() => {
+      $('.modal').modal();
+    });
   };
 
+  // $(document).ready(() => {
+  //   $('.modal').modal();
+  // });
+
   $scope.uploadedFile = (file) => {
-    if (!/\.json$/g.test(file.name.toString())) {
-      modalMessage('Upload a valid JSON file');
-    }
+    // if (!/\.json$/g.test(file.name.toString())) {
+    //   modalMessage('Upload a valid JSON file');
+    // }
 
     const reader = new FileReader();
     let fileContent;
     reader.readAsText(file);
-    reader.onload = (e) => {
-      fileContent = JSON.parse(e.target.result);
-      const checkJSON = fileContent.length > 0
-        && fileContent[0].title && fileContent[0].text;
-      if ((fileContent && checkJSON) !== false) {
-        $scope.uploadFile[file.name] = fileContent;
-        $scope.$apply();
-      } else {
-        modalMessage('The file uploaded is not valid');
-      }
-    };
+    console.log(file, 'herehrer');
+    if (file.type !== 'application/json') {
+      modalMessage('The file uploaded is not valid');
+    } else {
+      reader.onload = (e) => {
+        fileContent = JSON.parse(e.target.result);
+        const checkJSON = fileContent.length > 0
+          && fileContent[0].title && fileContent[0].text;
+        if ((fileContent && checkJSON) !== false) {
+          $scope.uploadFile[file.name] = fileContent;
+          $scope.$apply();
+        } else {
+          modalMessage('The file uploaded is not valid');
+        }
+      };
+    }
   };
 
   $scope.createIndex = () => {
@@ -48,10 +60,12 @@ app.controller('MainController', ['$scope', ($scope) => {
       Object.keys($scope.uploadFile).forEach((file) => {
         $scope.indices = $scope.indexInstance
           .createIndex(file, $scope.uploadFile[file]);
+        console.log(file, 'here');
         $scope.newIndex.push($scope.indices);
       });
     } else {
       $scope.indices = $scope.indexInstance.createIndex(addFile, $scope.uploadFile[addFile]);
+      console.log(addFile, $scope.indices, 'here');
       $scope.newIndex.push($scope.indices);
       if ($scope.newIndex[0] === false) {
         modalMessage('Invalid file type');

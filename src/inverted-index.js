@@ -14,21 +14,20 @@ class Index {
     this.index = {};
     this.files = {};
   }
-
   /**
    * checkJSON
    *
    * Checks whether the file is a JSON file
    *
-   * @param {object} responseFile - Content of the file
+   * @param {object} file - Content of the file
    * @returns {bool} | {object} A false boolean if file is not valid
    *
    * or a JSON object if valid file
    */
-  static checkJSON(responseFile) {
-    if (responseFile.length > 0
-      && responseFile[0].title && responseFile[0].text) {
-      return responseFile;
+  static checkJSON(file) {
+    if ((file || file.length > 0)
+      && file[0].title && file[0].text) {
+      return file;
     }
     return false;
   }
