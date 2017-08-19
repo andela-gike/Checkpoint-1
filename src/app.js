@@ -1,6 +1,6 @@
-const app = angular.module('invIndex', []);
+const app = angular.module('invIndex', ['toastr']);
 
-app.controller('MainController', ['$scope', ($scope) => {
+app.controller('MainController', ($scope, toastr) => {
   $scope.indexInstance = new Index();
   $scope.indexReveal = false;
   $scope.searchTable = false;
@@ -8,32 +8,25 @@ app.controller('MainController', ['$scope', ($scope) => {
   $scope.uploadFile = {};
   $scope.indexFile = {};
   $scope.keys = Object.keys;
+  toastr.success('Hello world!', 'Toastr fun!');
 
   $scope.arrayCount = number => new Array(number);
 
-  const modalMessage = (message) => {
-    $scope.message = message;
-    console.log(message);
-    $(document).ready(() => {
-      $('.modal').modal();
-    });
-  };
-
-  // $(document).ready(() => {
-  //   $('.modal').modal();
-  // });
 
   $scope.uploadedFile = (file) => {
-    // if (!/\.json$/g.test(file.name.toString())) {
-    //   modalMessage('Upload a valid JSON file');
-    // }
+    if (!/\.json$/g.test(file.name.toString())) {
+      toastr.error('Your file does not match the specified format',
+        'Error');
+      return;
+    }
 
     const reader = new FileReader();
     let fileContent;
     reader.readAsText(file);
     console.log(file, 'herehrer');
     if (file.type !== 'application/json') {
-      modalMessage('The file uploaded is not valid');
+      toastr.error('Your file does not match the specified format',
+      'Error');
     } else {
       reader.onload = (e) => {
         fileContent = JSON.parse(e.target.result);
@@ -41,9 +34,11 @@ app.controller('MainController', ['$scope', ($scope) => {
           && fileContent[0].title && fileContent[0].text;
         if ((fileContent && checkJSON) !== false) {
           $scope.uploadFile[file.name] = fileContent;
+          // toastr.success(`${$scope.file.name} has been uploaded`);
           $scope.$apply();
         } else {
-          modalMessage('The file uploaded is not valid');
+          toastr.error('Your file does not match the specified format',
+          'Error');
         }
       };
     }
@@ -53,7 +48,7 @@ app.controller('MainController', ['$scope', ($scope) => {
     const addFile = $scope.addFile;
     $scope.newIndex = [];
     if (!addFile) {
-      modalMessage('No file selected');
+      toastr.error('Please select a file to upload', 'Error');
     }
 
     if (addFile === 'all') {
@@ -68,7 +63,8 @@ app.controller('MainController', ['$scope', ($scope) => {
       console.log(addFile, $scope.indices, 'here');
       $scope.newIndex.push($scope.indices);
       if ($scope.newIndex[0] === false) {
-        modalMessage('Invalid file type');
+        toastr.error('Invalid file type',
+        'Error');
       }
     }
 
@@ -90,13 +86,12 @@ app.controller('MainController', ['$scope', ($scope) => {
     $scope.results = [];
     $scope.searchTable = false;
     if (!fileSearch) {
-      modalMessage(`No file selected, please select the file(s)
-       you want to search`);
+      toastr.warning(`No file selected, please select the file(s)
+       you want to search`, 'Warning');
     } else if (searchValue === '' || searchValue === undefined) {
-      modalMessage(`Search field cannot be blank,
-      please write the word(s) you want to find.`);
+      toastr.error('Please enter a search word', 'Error');
     } else if (Object.keys($scope.indexFile).length === 0) {
-      modalMessage('Create an index first, before you can search.');
+      toastr.error('Create an index first, before you can search.', 'Error');
     }
     if (fileSearch === 'all') {
       for (const file of Object.keys($scope.indexFile)) {
@@ -125,4 +120,4 @@ app.controller('MainController', ['$scope', ($scope) => {
       $scope.uploadedFile(e.target.files[item]);
     }
   });
-}]);
+});
